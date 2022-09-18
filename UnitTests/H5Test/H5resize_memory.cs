@@ -82,7 +82,8 @@ namespace UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(OutOfMemoryException))]
+        // This exception is thrown on .NET Framework but not in .NET Core
+        //[ExpectedException(typeof(OutOfMemoryException))]
         public void H5resize_memoryTest3()
         {
             IntPtr size = new IntPtr(1024 * 1024);
@@ -94,13 +95,19 @@ namespace UnitTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(OutOfMemoryException))]
+        // This exception is thrown on .NET framework but not in .NET 6 / Core
+        //[ExpectedException(typeof(OutOfMemoryException))]
         public void H5resize_memoryTest4()
         {
             // H5resize_memory(NULL, 0)	Returns NULL (undefined in C standard).
             IntPtr size = new IntPtr(0);
-            Assert.IsTrue(
-                Marshal.ReAllocHGlobal(IntPtr.Zero, size) == IntPtr.Zero);
+
+            // This isn't true on .NET 6
+            //Assert.IsTrue(Marshal.ReAllocHGlobal(IntPtr.Zero, size) == IntPtr.Zero);
+
+            IntPtr ptr = Marshal.ReAllocHGlobal(IntPtr.Zero, size);
+            Assert.IsFalse(ptr == IntPtr.Zero);
+            Assert.IsTrue(H5.free_memory(ptr) >= 0);
         }
     }
 }

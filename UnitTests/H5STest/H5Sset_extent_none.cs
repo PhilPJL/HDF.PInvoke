@@ -37,13 +37,15 @@ namespace UnitTests
         public void H5Sset_extent_noneTest1()
         {
             hsize_t[] dims = { 10, 20, 30 };
-            hid_t space =  H5S.create_simple(dims.Length, dims, dims);
+            hid_t space = H5S.create_simple(dims.Length, dims, dims);
             Assert.IsTrue(space > 0);
-            
+
             Assert.IsTrue(H5S.set_extent_none(space) >= 0);
-            Assert.IsTrue(
-                H5S.get_simple_extent_type(space) == H5S.class_t.NO_CLASS);
-            
+#if HDF5_1_10_DEBUG
+            Assert.AreEqual(H5S.class_t.NULL, H5S.get_simple_extent_type(space));
+#else
+            Assert.AreEqual(H5S.class_t.NO_CLASS, H5S.get_simple_extent_type(space));
+#endif
             Assert.IsTrue(H5S.close(space) >= 0);
         }
 
