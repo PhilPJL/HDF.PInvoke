@@ -18,7 +18,7 @@
 
 namespace UnitTests;
 
-public partial class H5GTest
+public partial class H5FTest
 {
     [TestMethod]
     public void H5Fclear_elink_cacheTest1()
