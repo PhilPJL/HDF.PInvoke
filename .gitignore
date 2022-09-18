@@ -199,3 +199,4 @@ FakesAssemblies/
 .fake
 **/temp/
 paket.template
+/.idea/.idea.HDF.PInvoke/.idea
