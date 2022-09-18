@@ -13,27 +13,22 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using HDF.PInvoke;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+namespace UnitTests;
 
-namespace UnitTests
+[TestClass]
+public class _AssemblySpecific
 {
-    [TestClass]
-    public class _AssemblySpecific
-    {
-        //[AssemblyInitialize()]
-        //public static void AssemblyInit(TestContext context)
-        //{
-        //    // open the HDF5 library
-        //    Assert.IsTrue(H5.open() >= 0);
-        //}
+    //[AssemblyInitialize()]
+    //public static void AssemblyInit(TestContext context)
+    //{
+    //    // open the HDF5 library
+    //    Assert.IsTrue(H5.open() >= 0);
+    //}
 
-        [AssemblyCleanup()]
-        public static void AssemblyCleanup()
-        {
-            // close the HDF5 library
-            Assert.IsTrue(H5.close() >= 0);
-        }
+    [AssemblyCleanup()]
+    public static void AssemblyCleanup()
+    {
+        // close the HDF5 library
+        Assert.IsTrue(H5.close() >= 0);
     }
 }

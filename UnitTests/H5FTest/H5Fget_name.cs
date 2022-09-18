@@ -13,54 +13,42 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Runtime.InteropServices;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-using ssize_t = System.IntPtr;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+namespace UnitTests;
+
+public partial class H5FTest
 {
-    public partial class H5FTest
+    [TestMethod]
+    public void H5Fget_nameTest1()
     {
-        [TestMethod]
-        public void H5Fget_nameTest1()
-        {
-            StringBuilder nameBuilder = new StringBuilder(256);
+        StringBuilder nameBuilder = new StringBuilder(256);
 
-            Assert.IsTrue(
-                H5F.get_name(m_v0_test_file, nameBuilder,
-                new IntPtr(nameBuilder.Capacity)).ToInt32() >= 0);
+        Assert.IsTrue(
+            H5F.get_name(m_v0_test_file, nameBuilder,
+            new IntPtr(nameBuilder.Capacity)).ToInt32() >= 0);
 
-            string name = nameBuilder.ToString();
-            // names should match
-            Assert.AreEqual(m_v0_test_file_name, name);
+        string name = nameBuilder.ToString();
+        // names should match
+        Assert.AreEqual(m_v0_test_file_name, name);
 
-            Assert.IsTrue(
-                H5F.get_name(m_v2_test_file, nameBuilder,
-                new IntPtr(nameBuilder.Capacity)).ToInt32() >= 0);
+        Assert.IsTrue(
+            H5F.get_name(m_v2_test_file, nameBuilder,
+            new IntPtr(nameBuilder.Capacity)).ToInt32() >= 0);
 
-            name = nameBuilder.ToString();
-            // names should match
-            Assert.AreEqual(m_v2_test_file_name, name);
-        }
+        name = nameBuilder.ToString();
+        // names should match
+        Assert.AreEqual(m_v2_test_file_name, name);
+    }
 
-        [TestMethod]
-        public void H5Fget_nameTest2()
-        {
-            StringBuilder nameBuilder = new StringBuilder(256);
+    [TestMethod]
+    public void H5Fget_nameTest2()
+    {
+        StringBuilder nameBuilder = new StringBuilder(256);
 
-            Assert.IsTrue(
-                H5F.get_name(Utilities.RandomInvalidHandle(), nameBuilder,
-                new IntPtr(nameBuilder.Capacity)).ToInt32() < 0);
-        }
+        Assert.IsTrue(
+            H5F.get_name(Utilities.RandomInvalidHandle(), nameBuilder,
+            new IntPtr(nameBuilder.Capacity)).ToInt32() < 0);
     }
 }

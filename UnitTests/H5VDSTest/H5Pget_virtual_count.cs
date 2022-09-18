@@ -13,38 +13,24 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
+namespace UnitTests;
 
-using herr_t = System.Int32;
-
-#if HDF5_VER1_10
-
-using hid_t = System.Int64;
-
-namespace UnitTests
+public partial class H5VDSTest
 {
-    public partial class H5VDSTest
+    [TestMethod]
+    public void H5Pget_virtual_countTestVDS1()
     {
-        [TestMethod]
-        public void H5Pget_virtual_countTestVDS1()
-        {
-            hid_t vds = H5D.open(m_vds_class_file, "VDS");
-            Assert.IsTrue(vds >= 0);
+        hid_t vds = H5D.open(m_vds_class_file, "VDS");
+        Assert.IsTrue(vds >= 0);
 
-            hid_t dcpl = H5D.get_create_plist(vds);
-            Assert.IsTrue(dcpl >= 0);
+        hid_t dcpl = H5D.get_create_plist(vds);
+        Assert.IsTrue(dcpl >= 0);
 
-            IntPtr count = IntPtr.Zero;
-            Assert.IsTrue(H5P.get_virtual_count(dcpl, ref count) >= 0);
-            Assert.IsTrue(3 == count.ToInt32());
+        IntPtr count = IntPtr.Zero;
+        Assert.IsTrue(H5P.get_virtual_count(dcpl, ref count) >= 0);
+        Assert.IsTrue(3 == count.ToInt32());
 
-            Assert.IsTrue(H5P.close(dcpl) >= 0);
-            Assert.IsTrue(H5D.close(vds) >= 0);
-        }
+        Assert.IsTrue(H5P.close(dcpl) >= 0);
+        Assert.IsTrue(H5D.close(vds) >= 0);
     }
 }
-
-#endif

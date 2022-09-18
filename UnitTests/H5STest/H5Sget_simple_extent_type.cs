@@ -13,61 +13,49 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.IO;
-using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-using hsize_t = System.UInt64;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+namespace UnitTests;
+
+public partial class H5STest
 {
-    public partial class H5STest
+    [TestMethod]
+    public void H5Sget_simple_extent_typeTest1()
     {
-        [TestMethod]
-        public void H5Sget_simple_extent_typeTest1()
-        {
-            hsize_t[] dims = { 1, 2, 3 };
-            hid_t space = H5S.create_simple(dims.Length, dims, dims);
-            Assert.IsTrue(space >= 0);
-            Assert.IsTrue(
-                H5S.get_simple_extent_type(space) == H5S.class_t.SIMPLE);
-            Assert.IsTrue(H5S.close(space) >= 0);
-        }
+        hsize_t[] dims = { 1, 2, 3 };
+        hid_t space = H5S.create_simple(dims.Length, dims, dims);
+        Assert.IsTrue(space >= 0);
+        Assert.IsTrue(
+            H5S.get_simple_extent_type(space) == H5S.class_t.SIMPLE);
+        Assert.IsTrue(H5S.close(space) >= 0);
+    }
 
-        [TestMethod]
-        public void H5Sget_simple_extent_typeTest2()
-        {
-            hid_t space = H5S.create(H5S.class_t.NULL);
-            Assert.IsTrue(space >= 0);
-            Assert.IsTrue(
-                H5S.get_simple_extent_type(space) == H5S.class_t.NULL);
-            Assert.IsTrue(H5S.close(space) >= 0);
-        }
+    [TestMethod]
+    public void H5Sget_simple_extent_typeTest2()
+    {
+        hid_t space = H5S.create(H5S.class_t.NULL);
+        Assert.IsTrue(space >= 0);
+        Assert.IsTrue(
+            H5S.get_simple_extent_type(space) == H5S.class_t.NULL);
+        Assert.IsTrue(H5S.close(space) >= 0);
+    }
 
-        [TestMethod]
-        public void H5Sget_simple_extent_typeTest3()
-        {
-            hid_t space = H5S.create(H5S.class_t.SCALAR);
-            Assert.IsTrue(space >= 0);
-            Assert.IsTrue(
-                H5S.get_simple_extent_type(space) == H5S.class_t.SCALAR);
-            Assert.IsTrue(H5S.close(space) >= 0);
-        }
+    [TestMethod]
+    public void H5Sget_simple_extent_typeTest3()
+    {
+        hid_t space = H5S.create(H5S.class_t.SCALAR);
+        Assert.IsTrue(space >= 0);
+        Assert.IsTrue(
+            H5S.get_simple_extent_type(space) == H5S.class_t.SCALAR);
+        Assert.IsTrue(H5S.close(space) >= 0);
+    }
 
-        [TestMethod]
-        public void H5Sget_simple_extent_typeTest4()
-        {
-            Assert.IsTrue(
-                H5S.get_simple_extent_type(Utilities.RandomInvalidHandle())
-                == H5S.class_t.NO_CLASS);
-        }
+    [TestMethod]
+    public void H5Sget_simple_extent_typeTest4()
+    {
+        Assert.IsTrue(
+            H5S.get_simple_extent_type(Utilities.RandomInvalidHandle())
+            == H5S.class_t.NO_CLASS);
     }
 }

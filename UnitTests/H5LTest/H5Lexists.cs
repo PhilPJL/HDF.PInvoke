@@ -13,66 +13,57 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5LTest
 {
-    public partial class H5LTest
+    [TestMethod]
+    public void H5LexistsTest1()
     {
-        [TestMethod]
-        public void H5LexistsTest1()
+        Assert.IsTrue(
+            H5G.close(H5G.create(m_v0_test_file, "A/B/C/D", m_lcpl)) >= 0);
+        Assert.IsTrue(H5L.exists(m_v0_test_file, "A") > 0);
+        Assert.IsTrue(H5L.exists(m_v0_test_file, "A/B") > 0);
+        Assert.IsTrue(H5L.exists(m_v0_test_file, "A/C/B") < 0);
+
+        Assert.IsTrue(
+            H5G.close(H5G.create(m_v2_test_file, "A/B/C/D", m_lcpl)) >= 0);
+        Assert.IsTrue(H5L.exists(m_v2_test_file, "A") > 0);
+        Assert.IsTrue(H5L.exists(m_v2_test_file, "A/B") > 0);
+        Assert.IsTrue(H5L.exists(m_v2_test_file, "A/C/B") < 0);
+    }
+
+    [TestMethod]
+    public void H5LexistsTest2()
+    {
+// Bug in 1.10.0?
+        //Assert.IsTrue(H5L.exists(m_v0_test_file, "/") == 0);
+        //Assert.IsTrue(H5L.exists(m_v2_test_file, "/") == 0);
+
+        Assert.IsTrue(H5L.exists(m_v0_test_file, ".") == 0);
+        Assert.IsTrue(H5L.exists(m_v2_test_file, ".") == 0);
+    }
+
+    [TestMethod]
+    public void H5LexistsTest3()
+    {
+        for (int i = 0; i < m_utf8strings.Length; ++i)
         {
+            int size = Encoding.UTF8.GetBytes(m_utf8strings[i]).Length;
+            byte[] buf = new byte[size + 1];
+            Array.Copy(Encoding.UTF8.GetBytes(m_utf8strings[i]), buf, size);
             Assert.IsTrue(
-                H5G.close(H5G.create(m_v0_test_file, "A/B/C/D", m_lcpl)) >= 0);
-            Assert.IsTrue(H5L.exists(m_v0_test_file, "A") > 0);
-            Assert.IsTrue(H5L.exists(m_v0_test_file, "A/B") > 0);
-            Assert.IsTrue(H5L.exists(m_v0_test_file, "A/C/B") < 0);
+                H5G.close(H5G.create(m_v0_test_file, buf, m_lcpl_utf8))
+                >= 0);
+            Assert.IsTrue(H5L.exists(m_v0_test_file, buf) > 0);
 
             Assert.IsTrue(
-                H5G.close(H5G.create(m_v2_test_file, "A/B/C/D", m_lcpl)) >= 0);
-            Assert.IsTrue(H5L.exists(m_v2_test_file, "A") > 0);
-            Assert.IsTrue(H5L.exists(m_v2_test_file, "A/B") > 0);
-            Assert.IsTrue(H5L.exists(m_v2_test_file, "A/C/B") < 0);
-        }
-
-        [TestMethod]
-        public void H5LexistsTest2()
-        {
-            #if (HDF5_VER1_10 == false)  // Bug in 1.10.0?
-            Assert.IsTrue(H5L.exists(m_v0_test_file, "/") == 0);
-            Assert.IsTrue(H5L.exists(m_v2_test_file, "/") == 0);
-            #endif
-            Assert.IsTrue(H5L.exists(m_v0_test_file, ".") == 0);
-            Assert.IsTrue(H5L.exists(m_v2_test_file, ".") == 0);
-        }
-
-        [TestMethod]
-        public void H5LexistsTest3()
-        {
-            for (int i = 0; i < m_utf8strings.Length; ++i)
-            {
-                int size = Encoding.UTF8.GetBytes(m_utf8strings[i]).Length;
-                byte[] buf = new byte[size + 1];
-                Array.Copy(Encoding.UTF8.GetBytes(m_utf8strings[i]), buf, size);
-                Assert.IsTrue(
-                    H5G.close(H5G.create(m_v0_test_file, buf, m_lcpl_utf8))
-                    >= 0);
-                Assert.IsTrue(H5L.exists(m_v0_test_file, buf) > 0);
-
-                Assert.IsTrue(
-                    H5G.close(H5G.create(m_v2_test_file, buf, m_lcpl_utf8))
-                    >= 0);
-                Assert.IsTrue(H5L.exists(m_v2_test_file, buf) > 0);
-            }
+                H5G.close(H5G.create(m_v2_test_file, buf, m_lcpl_utf8))
+                >= 0);
+            Assert.IsTrue(H5L.exists(m_v2_test_file, buf) > 0);
         }
     }
 }

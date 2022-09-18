@@ -13,7 +13,6 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
 
 //=============================================================================
 
@@ -30,7 +29,6 @@ using System;
  *	    fprintf(stderr, "unable to open the requested dataset\n");
  */
 
-using herr_t = System.Int32;
 
 /*
  * Boolean type.  Successful return values are zero (false) or positive
@@ -48,24 +46,17 @@ using herr_t = System.Int32;
  *	}
  */
 
-using hbool_t = System.UInt32;
-using htri_t = System.Int32;
-
-using ssize_t = System.IntPtr;
 
 /*
  * The sizes of file objects have their own types defined here, use a 64-bit
  * type.
  */
 
-using hsize_t = System.UInt64;
-using hssize_t = System.Int64;
 
 /*
  * File addresses have their own types.
  */
 
-using haddr_t = System.UInt64;
 
 #endregion
 
@@ -73,11 +64,7 @@ using haddr_t = System.UInt64;
 
 #region H5Ipublic.h
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
+
 
 #endregion
 
@@ -86,6 +73,5 @@ using hid_t = System.Int32;
 #region H5Opublic.h
 
 /* Typedef for message creation indexes */
-using H5O_msg_crt_idx_t = System.UInt32;
 
 #endregion

@@ -13,39 +13,31 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5FTest
 {
-    public partial class H5FTest
+    [TestMethod]
+    public void H5FflushTest1()
     {
-        [TestMethod]
-        public void H5FflushTest1()
-        {
-            Assert.IsTrue(
-                H5F.flush(m_v0_class_file, H5F.scope_t.GLOBAL) >= 0);
-            Assert.IsTrue(
-                H5F.flush(m_v2_class_file, H5F.scope_t.GLOBAL) >= 0);
-            Assert.IsTrue(
-                H5F.flush(m_v0_class_file, H5F.scope_t.LOCAL) >= 0);
-            Assert.IsTrue(
-                H5F.flush(m_v2_class_file, H5F.scope_t.LOCAL) >= 0);
-        }
+        Assert.IsTrue(
+            H5F.flush(m_v0_class_file, H5F.scope_t.GLOBAL) >= 0);
+        Assert.IsTrue(
+            H5F.flush(m_v2_class_file, H5F.scope_t.GLOBAL) >= 0);
+        Assert.IsTrue(
+            H5F.flush(m_v0_class_file, H5F.scope_t.LOCAL) >= 0);
+        Assert.IsTrue(
+            H5F.flush(m_v2_class_file, H5F.scope_t.LOCAL) >= 0);
+    }
 
-        [TestMethod]
-        public void H5FflushTest2()
-        {
-            Assert.IsFalse(
-                H5F.flush(Utilities.RandomInvalidHandle(),
-                H5F.scope_t.GLOBAL) >= 0);
-        }
+    [TestMethod]
+    public void H5FflushTest2()
+    {
+        Assert.IsFalse(
+            H5F.flush(Utilities.RandomInvalidHandle(),
+            H5F.scope_t.GLOBAL) >= 0);
     }
 }

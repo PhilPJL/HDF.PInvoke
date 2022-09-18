@@ -13,39 +13,30 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5FTest
 {
-    public partial class H5FTest
+    [TestMethod]
+    public void H5Fis_hdf5Test1()
     {
-        [TestMethod]
-        public void H5Fis_hdf5Test1()
-        {
-            string fname = Path.GetTempFileName();
-            hid_t file = H5F.create(fname, H5F.ACC_TRUNC);
-            Assert.IsTrue(file >= 0);
-            Assert.IsTrue(H5F.close(file) >= 0);
-            Assert.IsTrue(H5F.is_hdf5(fname) > 0);
-            File.Delete(fname);
-        }
+        string fname = Path.GetTempFileName();
+        hid_t file = H5F.create(fname, H5F.ACC_TRUNC);
+        Assert.IsTrue(file >= 0);
+        Assert.IsTrue(H5F.close(file) >= 0);
+        Assert.IsTrue(H5F.is_hdf5(fname) > 0);
+        File.Delete(fname);
+    }
 
-        [TestMethod]
-        public void H5Fis_hdf5Test2()
-        {
-            Assert.IsTrue(H5F.is_hdf5("") < 0);
-            string fname = Path.GetTempFileName();
-            Assert.IsTrue(H5F.is_hdf5(fname) == 0);
-            File.Delete(fname);
-        }
+    [TestMethod]
+    public void H5Fis_hdf5Test2()
+    {
+        Assert.IsTrue(H5F.is_hdf5("") < 0);
+        string fname = Path.GetTempFileName();
+        Assert.IsTrue(H5F.is_hdf5(fname) == 0);
+        File.Delete(fname);
     }
 }

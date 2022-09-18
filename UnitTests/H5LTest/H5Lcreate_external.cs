@@ -13,29 +13,21 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5LTest
 {
-    public partial class H5LTest
+    [TestMethod]
+    public void H5Lcreate_externalTest1()
     {
-        [TestMethod]
-        public void H5Lcreate_externalTest1()
-        {
-            Assert.IsTrue(
-                H5L.create_external(m_v0_class_file_name, "/", m_v0_test_file,
-                "A/B/C", m_lcpl) >= 0);
-            Assert.IsTrue(
-                H5L.create_external(m_v2_class_file_name, "/", m_v2_test_file,
-                "A/B/C", m_lcpl) >= 0);
-        }
+        Assert.IsTrue(
+            H5L.create_external(m_v0_class_file_name, "/", m_v0_test_file,
+            "A/B/C", m_lcpl) >= 0);
+        Assert.IsTrue(
+            H5L.create_external(m_v2_class_file_name, "/", m_v2_test_file,
+            "A/B/C", m_lcpl) >= 0);
     }
 }

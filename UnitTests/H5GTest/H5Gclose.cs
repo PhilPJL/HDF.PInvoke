@@ -13,51 +13,43 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5GTest
 {
-    public partial class H5GTest
+    [TestMethod]
+    public void H5GcloseTest1()
     {
-        [TestMethod]
-        public void H5GcloseTest1()
-        {
-            hid_t gid = H5G.create(m_v0_test_file, "A");
-            Assert.IsTrue(gid >= 0);
-            Assert.IsTrue(H5G.close(gid) >= 0);
+        hid_t gid = H5G.create(m_v0_test_file, "A");
+        Assert.IsTrue(gid >= 0);
+        Assert.IsTrue(H5G.close(gid) >= 0);
 
-            gid = H5G.create(m_v2_test_file, "A");
-            Assert.IsTrue(gid >= 0);
-            Assert.IsTrue(H5G.close(gid) >= 0);
-        }
+        gid = H5G.create(m_v2_test_file, "A");
+        Assert.IsTrue(gid >= 0);
+        Assert.IsTrue(H5G.close(gid) >= 0);
+    }
 
-        [TestMethod]
-        public void H5GcloseTest2()
-        {
-            hid_t gid = H5G.create(m_v0_test_file, "A");
-            Assert.IsTrue(gid >= 0);
-            Assert.IsTrue(H5G.close(gid) >= 0);
-            Assert.IsTrue(H5G.close(gid) < 0);
+    [TestMethod]
+    public void H5GcloseTest2()
+    {
+        hid_t gid = H5G.create(m_v0_test_file, "A");
+        Assert.IsTrue(gid >= 0);
+        Assert.IsTrue(H5G.close(gid) >= 0);
+        Assert.IsTrue(H5G.close(gid) < 0);
 
-            gid = H5G.create(m_v2_test_file, "A");
-            Assert.IsTrue(gid >= 0);
-            Assert.IsTrue(H5G.close(gid) >= 0);
-            Assert.IsTrue(H5G.close(gid) < 0);
-        }
+        gid = H5G.create(m_v2_test_file, "A");
+        Assert.IsTrue(gid >= 0);
+        Assert.IsTrue(H5G.close(gid) >= 0);
+        Assert.IsTrue(H5G.close(gid) < 0);
+    }
 
-        [TestMethod]
-        public void H5GcloseTest3()
-        {
-            hid_t gid = Utilities.RandomInvalidHandle();
-            Assert.IsTrue(H5G.close(gid) < 0);
-        }
+    [TestMethod]
+    public void H5GcloseTest3()
+    {
+        hid_t gid = Utilities.RandomInvalidHandle();
+        Assert.IsTrue(H5G.close(gid) < 0);
     }
 }

@@ -13,33 +13,29 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+namespace UnitTests;
 
-namespace UnitTests
+[TestClass]
+public partial class H5Test
 {
-    [TestClass]
-    public partial class H5Test
+    [ClassInitialize()]
+    public static void ClassInit(TestContext testContext)
     {
-        [ClassInitialize()]
-        public static void ClassInit(TestContext testContext)
-        {
-        }
+    }
 
-        [TestInitialize()]
-        public void Init()
-        {
-            Utilities.DisableErrorPrinting();
-        }
+    [TestInitialize()]
+    public void Init()
+    {
+        Utilities.DisableErrorPrinting();
+    }
 
-        [TestCleanup()]
-        public void Cleanup()
-        {
-        }
+    [TestCleanup()]
+    public void Cleanup()
+    {
+    }
 
-        [ClassCleanup()]
-        public static void ClassCleanup()
-        {
-        }
+    [ClassCleanup()]
+    public static void ClassCleanup()
+    {
     }
 }

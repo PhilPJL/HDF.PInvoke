@@ -13,38 +13,28 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.IO;
-using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5GTest
 {
-    public partial class H5GTest
+    [TestMethod]
+    public void H5Gget_infoTest1()
     {
-        [TestMethod]
-        public void H5Gget_infoTest1()
-        {
-            H5G.info_t info = new H5G.info_t();
-            Assert.IsTrue(H5G.get_info(m_v0_class_file, ref info) >= 0);
-            Assert.IsTrue(H5G.get_info(m_v0_test_file, ref info) >= 0);
-            Assert.IsTrue(H5G.get_info(m_v2_class_file, ref info) >= 0);
-            Assert.IsTrue(H5G.get_info(m_v2_test_file, ref info) >= 0);
-        }
+        H5G.info_t info = new H5G.info_t();
+        Assert.IsTrue(H5G.get_info(m_v0_class_file, ref info) >= 0);
+        Assert.IsTrue(H5G.get_info(m_v0_test_file, ref info) >= 0);
+        Assert.IsTrue(H5G.get_info(m_v2_class_file, ref info) >= 0);
+        Assert.IsTrue(H5G.get_info(m_v2_test_file, ref info) >= 0);
+    }
 
-        [TestMethod]
-        public void H5Gget_infoTest2()
-        {
-            H5G.info_t info = new H5G.info_t();
-            hid_t gid = Utilities.RandomInvalidHandle();
-            Assert.IsTrue(H5G.get_info(gid, ref info) < 0);
-        }
+    [TestMethod]
+    public void H5Gget_infoTest2()
+    {
+        H5G.info_t info = new H5G.info_t();
+        hid_t gid = Utilities.RandomInvalidHandle();
+        Assert.IsTrue(H5G.get_info(gid, ref info) < 0);
     }
 }

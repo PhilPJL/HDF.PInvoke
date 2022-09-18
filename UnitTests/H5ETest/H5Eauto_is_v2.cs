@@ -13,37 +13,29 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5ETest
 {
-    public partial class H5ETest
+    [TestMethod]
+    public void H5Eauto_is_v2Test1()
     {
-        [TestMethod]
-        public void H5Eauto_is_v2Test1()
-        {
-            hid_t est = H5E.create_stack();
-            Assert.IsTrue(est >= 0);
-            uint version = 0;
-            Assert.IsTrue(H5E.auto_is_v2(est, ref version) >= 0);
-            Assert.IsTrue(version == 1);
-            Assert.IsTrue(H5E.close_stack(est) >= 0);
-        }
+        hid_t est = H5E.create_stack();
+        Assert.IsTrue(est >= 0);
+        uint version = 0;
+        Assert.IsTrue(H5E.auto_is_v2(est, ref version) >= 0);
+        Assert.IsTrue(version == 1);
+        Assert.IsTrue(H5E.close_stack(est) >= 0);
+    }
 
-        [TestMethod]
-        public void H5Eauto_is_v2Test2()
-        {
-            uint version = 0;
-            Assert.IsFalse(
-                H5E.auto_is_v2(Utilities.RandomInvalidHandle(), ref version) >= 0);
-        }
+    [TestMethod]
+    public void H5Eauto_is_v2Test2()
+    {
+        uint version = 0;
+        Assert.IsFalse(
+            H5E.auto_is_v2(Utilities.RandomInvalidHandle(), ref version) >= 0);
     }
 }

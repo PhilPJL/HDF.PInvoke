@@ -13,43 +13,33 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-using hsize_t = System.UInt64;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+namespace UnitTests;
+
+public partial class H5OTest
 {
-    public partial class H5OTest
+    [TestMethod]
+    public void H5OopenTest1()
     {
-        [TestMethod]
-        public void H5OopenTest1()
-        {
-            Assert.IsTrue(
-                H5G.close(H5G.create(m_v0_test_file, "A/B/C", m_lcpl)) >= 0);
-            hid_t obj = H5O.open(m_v0_test_file, "A/B");
-            Assert.IsTrue(obj >= 0);
-            Assert.IsTrue(H5O.close(obj) >= 0);
+        Assert.IsTrue(
+            H5G.close(H5G.create(m_v0_test_file, "A/B/C", m_lcpl)) >= 0);
+        hid_t obj = H5O.open(m_v0_test_file, "A/B");
+        Assert.IsTrue(obj >= 0);
+        Assert.IsTrue(H5O.close(obj) >= 0);
 
-            Assert.IsTrue(
-                H5G.close(H5G.create(m_v2_test_file, "A/B/C", m_lcpl)) >= 0);
-            obj = H5O.open(m_v2_test_file, "A/B");
-            Assert.IsTrue(obj >= 0);
-            Assert.IsTrue(H5O.close(obj) >= 0);
-        }
+        Assert.IsTrue(
+            H5G.close(H5G.create(m_v2_test_file, "A/B/C", m_lcpl)) >= 0);
+        obj = H5O.open(m_v2_test_file, "A/B");
+        Assert.IsTrue(obj >= 0);
+        Assert.IsTrue(H5O.close(obj) >= 0);
+    }
 
-        [TestMethod]
-        public void H5OopenTest2()
-        {
-            Assert.IsFalse(
-                H5O.open(Utilities.RandomInvalidHandle(), ".") >= 0);
-        }
+    [TestMethod]
+    public void H5OopenTest2()
+    {
+        Assert.IsFalse(
+            H5O.open(Utilities.RandomInvalidHandle(), ".") >= 0);
     }
 }

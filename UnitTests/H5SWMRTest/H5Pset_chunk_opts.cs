@@ -13,40 +13,23 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
+namespace UnitTests;
 
-using hbool_t = System.UInt32;
-using herr_t = System.Int32;
-using hsize_t = System.UInt64;
-
-
-#if HDF5_VER1_10
-
-using hid_t = System.Int64;
-
-namespace UnitTests
+public partial class H5SWMRTest
 {
-    public partial class H5SWMRTest
+    [TestMethod]
+    public void H5Pset_chunk_optsTestSWMR1()
     {
-        [TestMethod]
-        public void H5Pset_chunk_optsTestSWMR1()
-        {
-            hid_t dcpl = H5P.create(H5P.DATASET_CREATE);
-            Assert.IsTrue(dcpl >= 0);
+        hid_t dcpl = H5P.create(H5P.DATASET_CREATE);
+        Assert.IsTrue(dcpl >= 0);
 
-            // without chunking, H5Pset_chunk_opts will throw an error
-            hsize_t[] dims = { 4711 };
-            Assert.IsTrue(H5P.set_chunk(dcpl, 1, dims) >= 0);
+        // without chunking, H5Pset_chunk_opts will throw an error
+        hsize_t[] dims = { 4711 };
+        Assert.IsTrue(H5P.set_chunk(dcpl, 1, dims) >= 0);
 
-            uint opts = H5D.DONT_FILTER_PARTIAL_CHUNKS;
-            Assert.IsTrue(H5P.set_chunk_opts(dcpl, opts) >= 0);
-            
-            Assert.IsTrue(H5P.close(dcpl) >= 0);
-        }
+        uint opts = H5D.DONT_FILTER_PARTIAL_CHUNKS;
+        Assert.IsTrue(H5P.set_chunk_opts(dcpl, opts) >= 0);
+
+        Assert.IsTrue(H5P.close(dcpl) >= 0);
     }
 }
-
-#endif

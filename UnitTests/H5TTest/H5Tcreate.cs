@@ -13,27 +13,19 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5TTest
 {
-    public partial class H5TTest
+    [TestMethod]
+    public void H5TcreateTest1()
     {
-        [TestMethod]
-        public void H5TcreateTest1()
-        {
-            hid_t dtype = H5T.create(H5T.class_t.STRING, H5T.VARIABLE);
-            Assert.IsTrue(dtype >= 0);
-            Assert.IsTrue(H5T.is_variable_str(dtype) > 0);
-            Assert.IsTrue(H5T.close(dtype) >= 0);
-        }
+        hid_t dtype = H5T.create(H5T.class_t.STRING, H5T.VARIABLE);
+        Assert.IsTrue(dtype >= 0);
+        Assert.IsTrue(H5T.is_variable_str(dtype) > 0);
+        Assert.IsTrue(H5T.close(dtype) >= 0);
     }
 }

@@ -13,42 +13,32 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.IO;
-using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5GTest
 {
-    public partial class H5GTest
+    [TestMethod]
+    public void H5GopenTest1()
     {
-        [TestMethod]
-        public void H5GopenTest1()
-        {
-            hid_t group = H5G.open(m_v0_class_file, ".");
-            Assert.IsTrue(group >= 0);
-            Assert.IsTrue(H5G.close(group) >= 0);
+        hid_t group = H5G.open(m_v0_class_file, ".");
+        Assert.IsTrue(group >= 0);
+        Assert.IsTrue(H5G.close(group) >= 0);
 
-            group = H5G.open(m_v2_class_file, ".");
-            Assert.IsTrue(group >= 0);
-            Assert.IsTrue(H5G.close(group) >= 0);
-        }
+        group = H5G.open(m_v2_class_file, ".");
+        Assert.IsTrue(group >= 0);
+        Assert.IsTrue(H5G.close(group) >= 0);
+    }
 
-        [TestMethod]
-        public void H5GopenTest2()
-        {
-            hid_t group = H5G.open(Utilities.RandomInvalidHandle(), ".");
-            Assert.IsTrue(group < 0);
+    [TestMethod]
+    public void H5GopenTest2()
+    {
+        hid_t group = H5G.open(Utilities.RandomInvalidHandle(), ".");
+        Assert.IsTrue(group < 0);
 
-            group = H5G.open(Utilities.RandomInvalidHandle(), "A");
-            Assert.IsTrue(group < 0);
-        }
+        group = H5G.open(Utilities.RandomInvalidHandle(), "A");
+        Assert.IsTrue(group < 0);
     }
 }

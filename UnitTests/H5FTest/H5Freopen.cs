@@ -13,39 +13,30 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5FTest
 {
-    public partial class H5FTest
+    [TestMethod]
+    public void H5FreopenTest1()
     {
-        [TestMethod]
-        public void H5FreopenTest1()
-        {
-            hid_t file = H5F.reopen(m_v0_class_file);
-            Assert.IsTrue(file >= 0);
+        hid_t file = H5F.reopen(m_v0_class_file);
+        Assert.IsTrue(file >= 0);
 
-            hid_t file1 = H5F.reopen(m_v2_class_file);
-            Assert.IsTrue(file1 >= 0);
+        hid_t file1 = H5F.reopen(m_v2_class_file);
+        Assert.IsTrue(file1 >= 0);
 
-            Assert.IsTrue(H5F.close(file) >= 0);
-            Assert.IsTrue(H5F.close(file1) >= 0);
-        }
+        Assert.IsTrue(H5F.close(file) >= 0);
+        Assert.IsTrue(H5F.close(file1) >= 0);
+    }
 
-        [TestMethod]
-        public void H5FreopenTest2()
-        {
-            Assert.IsFalse(
-                H5F.reopen(Utilities.RandomInvalidHandle()) >= 0);
-        }
+    [TestMethod]
+    public void H5FreopenTest2()
+    {
+        Assert.IsFalse(
+            H5F.reopen(Utilities.RandomInvalidHandle()) >= 0);
     }
 }

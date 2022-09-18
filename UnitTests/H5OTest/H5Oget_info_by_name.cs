@@ -13,47 +13,39 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5OTest
 {
-    public partial class H5OTest
+    [TestMethod]
+    public void H5Oget_info_by_nameTest1()
     {
-        [TestMethod]
-        public void H5Oget_info_by_nameTest1()
-        {
-            Assert.IsTrue(
-                H5G.close(H5G.create(m_v0_test_file, "A/B/C", m_lcpl)) >= 0);
+        Assert.IsTrue(
+            H5G.close(H5G.create(m_v0_test_file, "A/B/C", m_lcpl)) >= 0);
 
-            H5O.info_t info = new H5O.info_t();
-            Assert.IsTrue(
-                H5O.get_info_by_name(m_v0_test_file, "A/B", ref info) >= 0);
-            Assert.IsTrue(info.type == H5O.type_t.GROUP);
+        H5O.info_t info = new H5O.info_t();
+        Assert.IsTrue(
+            H5O.get_info_by_name(m_v0_test_file, "A/B", ref info) >= 0);
+        Assert.IsTrue(info.type == H5O.type_t.GROUP);
 
-            Assert.IsTrue(
-                H5G.close(H5G.create(m_v2_test_file, "A/B/C", m_lcpl)) >= 0);
+        Assert.IsTrue(
+            H5G.close(H5G.create(m_v2_test_file, "A/B/C", m_lcpl)) >= 0);
 
-            info = new H5O.info_t();
-            Assert.IsTrue(
-                H5O.get_info_by_name(m_v2_test_file, "A/B", ref info) >= 0);
-            Assert.IsTrue(info.type == H5O.type_t.GROUP);
-        }
+        info = new H5O.info_t();
+        Assert.IsTrue(
+            H5O.get_info_by_name(m_v2_test_file, "A/B", ref info) >= 0);
+        Assert.IsTrue(info.type == H5O.type_t.GROUP);
+    }
 
-        [TestMethod]
-        public void H5Oget_info_by_nameTest2()
-        {
-            H5O.info_t info = new H5O.info_t();
-            Assert.IsFalse(
-                H5O.get_info_by_name(Utilities.RandomInvalidHandle(), ".",
-                ref info) >= 0);
-        }
+    [TestMethod]
+    public void H5Oget_info_by_nameTest2()
+    {
+        H5O.info_t info = new H5O.info_t();
+        Assert.IsFalse(
+            H5O.get_info_by_name(Utilities.RandomInvalidHandle(), ".",
+            ref info) >= 0);
     }
 }

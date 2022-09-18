@@ -13,59 +13,50 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5LTest
 {
-    public partial class H5LTest
+    [TestMethod]
+    public void H5Lcreate_hardTest1()
     {
-        [TestMethod]
-        public void H5Lcreate_hardTest1()
-        {
-            Assert.IsTrue(H5G.create(m_v0_test_file, "A/B/C/D", m_lcpl) >= 0);
-            Assert.IsTrue(
-                H5L.create_hard(m_v0_test_file, "A/B/C/D", m_v0_test_file,
-                "shortcut") >= 0);
+        Assert.IsTrue(H5G.create(m_v0_test_file, "A/B/C/D", m_lcpl) >= 0);
+        Assert.IsTrue(
+            H5L.create_hard(m_v0_test_file, "A/B/C/D", m_v0_test_file,
+            "shortcut") >= 0);
 
-            Assert.IsTrue(H5G.create(m_v2_test_file, "A/B/C/D", m_lcpl) >= 0);
+        Assert.IsTrue(H5G.create(m_v2_test_file, "A/B/C/D", m_lcpl) >= 0);
+        Assert.IsTrue(
+            H5L.create_hard(m_v2_test_file, "A/B/C/D", m_v2_test_file,
+            "shortcut") >= 0);
+    }
+
+    [TestMethod]
+    public void H5Lcreate_hardTest2()
+    {
+        Assert.IsTrue(
+            H5G.create(m_v0_test_file, "A/B/C/D", m_lcpl_utf8) >= 0);
+
+        for (int i = 0; i < m_utf8strings.Length; ++i)
+        {
             Assert.IsTrue(
-                H5L.create_hard(m_v2_test_file, "A/B/C/D", m_v2_test_file,
-                "shortcut") >= 0);
+                H5L.create_hard(m_v0_test_file,
+                Encoding.ASCII.GetBytes("A/B/C/D"), m_v0_test_file,
+                Encoding.UTF8.GetBytes(m_utf8strings[i])) >= 0);
         }
 
-        [TestMethod]
-        public void H5Lcreate_hardTest2()
+        Assert.IsTrue(
+            H5G.create(m_v2_test_file, "A/B/C/D", m_lcpl_utf8) >= 0);
+
+        for (int i = 0; i < m_utf8strings.Length; ++i)
         {
             Assert.IsTrue(
-                H5G.create(m_v0_test_file, "A/B/C/D", m_lcpl_utf8) >= 0);
-
-            for (int i = 0; i < m_utf8strings.Length; ++i)
-            {
-                Assert.IsTrue(
-                    H5L.create_hard(m_v0_test_file,
-                    Encoding.ASCII.GetBytes("A/B/C/D"), m_v0_test_file,
-                    Encoding.UTF8.GetBytes(m_utf8strings[i])) >= 0);
-            }
-
-            Assert.IsTrue(
-                H5G.create(m_v2_test_file, "A/B/C/D", m_lcpl_utf8) >= 0);
-
-            for (int i = 0; i < m_utf8strings.Length; ++i)
-            {
-                Assert.IsTrue(
-                    H5L.create_hard(m_v2_test_file,
-                    Encoding.ASCII.GetBytes("A/B/C/D"), m_v2_test_file,
-                    Encoding.UTF8.GetBytes(m_utf8strings[i])) >= 0);
-            }
+                H5L.create_hard(m_v2_test_file,
+                Encoding.ASCII.GetBytes("A/B/C/D"), m_v2_test_file,
+                Encoding.UTF8.GetBytes(m_utf8strings[i])) >= 0);
         }
     }
 }

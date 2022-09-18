@@ -13,51 +13,38 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.IO;
-using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
-
-using herr_t = System.Int32;
-using hsize_t = System.UInt64;
 using hssize_t = System.Int64;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5STest
 {
-    public partial class H5STest
+    [TestMethod]
+    public void H5Soffset_simpleTest1()
     {
-        [TestMethod]
-        public void H5Soffset_simpleTest1()
-        {
-            hsize_t[] dims = { 10, 10 };
-            hid_t space =  H5S.create_simple(dims.Length, dims, null);
-            Assert.IsTrue(space > 0);
+        hsize_t[] dims = { 10, 10 };
+        hid_t space = H5S.create_simple(dims.Length, dims, null);
+        Assert.IsTrue(space > 0);
 
-            hsize_t[] start = { 0, 0 };
-            hsize_t[] count = { 1, 1 };
-            hsize_t[] block = { 2, 3 };
-            Assert.IsTrue(
-                H5S.select_hyperslab(space, H5S.seloper_t.SET, start, null,
-                count, block) >= 0);
+        hsize_t[] start = { 0, 0 };
+        hsize_t[] count = { 1, 1 };
+        hsize_t[] block = { 2, 3 };
+        Assert.IsTrue(
+            H5S.select_hyperslab(space, H5S.seloper_t.SET, start, null,
+            count, block) >= 0);
 
-            hssize_t[] offset = { 0, 0 };
-            Assert.IsTrue(H5S.offset_simple(space, offset) >= 0);
+        hssize_t[] offset = { 0, 0 };
+        Assert.IsTrue(H5S.offset_simple(space, offset) >= 0);
 
-            Assert.IsTrue(H5S.close(space) >= 0);
-        }
+        Assert.IsTrue(H5S.close(space) >= 0);
+    }
 
-        [TestMethod]
-        public void H5Soffset_simpleTest2()
-        {
-            Assert.IsFalse(
-                H5S.offset_simple(Utilities.RandomInvalidHandle(), null) >= 0);
-        }
+    [TestMethod]
+    public void H5Soffset_simpleTest2()
+    {
+        Assert.IsFalse(
+            H5S.offset_simple(Utilities.RandomInvalidHandle(), null) >= 0);
     }
 }

@@ -13,47 +13,37 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-using size_t = System.IntPtr;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+namespace UnitTests;
+
+public partial class H5FTest
 {
-    public partial class H5FTest
+    [TestMethod]
+    public void H5Fget_mdc_sizeTest1()
     {
-        [TestMethod]
-        public void H5Fget_mdc_sizeTest1()
-        {
-            size_t max_size = IntPtr.Zero, min_clean_size = IntPtr.Zero,
-                cur_size = IntPtr.Zero;
-            int cur_num_entries = 0;
-            Assert.IsTrue(H5F.get_mdc_size(m_v0_class_file, ref max_size,
-                ref min_clean_size, ref cur_size, ref cur_num_entries) >= 0);
-            Assert.IsTrue(H5F.get_mdc_size(m_v2_class_file, ref max_size,
-                ref min_clean_size, ref cur_size, ref cur_num_entries) >= 0);
-            Assert.IsTrue(H5F.get_mdc_size(m_v0_test_file, ref max_size,
-                ref min_clean_size, ref cur_size, ref cur_num_entries) >= 0);
-            Assert.IsTrue(H5F.get_mdc_size(m_v2_test_file, ref max_size,
-                ref min_clean_size, ref cur_size, ref cur_num_entries) >= 0);
-        }
+        size_t max_size = IntPtr.Zero, min_clean_size = IntPtr.Zero,
+            cur_size = IntPtr.Zero;
+        int cur_num_entries = 0;
+        Assert.IsTrue(H5F.get_mdc_size(m_v0_class_file, ref max_size,
+            ref min_clean_size, ref cur_size, ref cur_num_entries) >= 0);
+        Assert.IsTrue(H5F.get_mdc_size(m_v2_class_file, ref max_size,
+            ref min_clean_size, ref cur_size, ref cur_num_entries) >= 0);
+        Assert.IsTrue(H5F.get_mdc_size(m_v0_test_file, ref max_size,
+            ref min_clean_size, ref cur_size, ref cur_num_entries) >= 0);
+        Assert.IsTrue(H5F.get_mdc_size(m_v2_test_file, ref max_size,
+            ref min_clean_size, ref cur_size, ref cur_num_entries) >= 0);
+    }
 
-        [TestMethod]
-        public void H5Fget_mdc_sizeTest2()
-        {
-            size_t max_size = IntPtr.Zero, min_clean_size = IntPtr.Zero,
-                cur_size = IntPtr.Zero;
-            int cur_num_entries = 0;
-            Assert.IsFalse(
-                H5F.get_mdc_size(Utilities.RandomInvalidHandle(), ref max_size,
-                ref min_clean_size, ref cur_size, ref cur_num_entries) >= 0);
-        }
+    [TestMethod]
+    public void H5Fget_mdc_sizeTest2()
+    {
+        size_t max_size = IntPtr.Zero, min_clean_size = IntPtr.Zero,
+            cur_size = IntPtr.Zero;
+        int cur_num_entries = 0;
+        Assert.IsFalse(
+            H5F.get_mdc_size(Utilities.RandomInvalidHandle(), ref max_size,
+            ref min_clean_size, ref cur_size, ref cur_num_entries) >= 0);
     }
 }

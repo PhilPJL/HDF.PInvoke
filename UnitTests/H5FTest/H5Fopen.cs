@@ -13,44 +13,35 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5FTest
 {
-    public partial class H5FTest
+    [TestMethod]
+    public void H5FopenTest1()
     {
-        [TestMethod]
-        public void H5FopenTest1()
-        {
-            string fname = Path.GetTempFileName();
-            hid_t file = H5F.create(fname, H5F.ACC_TRUNC);
-            Assert.IsTrue(file >= 0);
-            Assert.IsTrue(H5F.close(file) >= 0);
+        string fname = Path.GetTempFileName();
+        hid_t file = H5F.create(fname, H5F.ACC_TRUNC);
+        Assert.IsTrue(file >= 0);
+        Assert.IsTrue(H5F.close(file) >= 0);
 
-            file = H5F.open(fname, H5F.ACC_RDONLY);
-            Assert.IsTrue(file >= 0);
-            Assert.IsTrue(H5F.close(file) >= 0);
+        file = H5F.open(fname, H5F.ACC_RDONLY);
+        Assert.IsTrue(file >= 0);
+        Assert.IsTrue(H5F.close(file) >= 0);
 
-            file = H5F.open(fname, H5F.ACC_RDWR);
-            Assert.IsTrue(file >= 0);
-            Assert.IsTrue(H5F.close(file) >= 0);
-            File.Delete(fname);
-        }
+        file = H5F.open(fname, H5F.ACC_RDWR);
+        Assert.IsTrue(file >= 0);
+        Assert.IsTrue(H5F.close(file) >= 0);
+        File.Delete(fname);
+    }
 
-        [TestMethod]
-        public void H5FopenTest2()
-        {
-            Assert.IsFalse(
-                H5F.open("", H5F.ACC_RDONLY) >= 0);
-        }
+    [TestMethod]
+    public void H5FopenTest2()
+    {
+        Assert.IsFalse(
+            H5F.open("", H5F.ACC_RDONLY) >= 0);
     }
 }

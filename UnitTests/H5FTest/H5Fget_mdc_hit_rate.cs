@@ -13,37 +13,29 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5FTest
 {
-    public partial class H5FTest
+    [TestMethod]
+    public void H5Fget_mdc_hit_rateTest1()
     {
-        [TestMethod]
-        public void H5Fget_mdc_hit_rateTest1()
-        {
-            double rate = 0.0;
-            Assert.IsTrue(H5F.get_mdc_hit_rate(m_v0_class_file, ref rate) >= 0);
-            Assert.IsTrue(H5F.get_mdc_hit_rate(m_v2_class_file, ref rate) >= 0);
-            Assert.IsTrue(H5F.get_mdc_hit_rate(m_v0_test_file, ref rate) >= 0);
-            Assert.IsTrue(H5F.get_mdc_hit_rate(m_v2_test_file, ref rate) >= 0);
-        }
+        double rate = 0.0;
+        Assert.IsTrue(H5F.get_mdc_hit_rate(m_v0_class_file, ref rate) >= 0);
+        Assert.IsTrue(H5F.get_mdc_hit_rate(m_v2_class_file, ref rate) >= 0);
+        Assert.IsTrue(H5F.get_mdc_hit_rate(m_v0_test_file, ref rate) >= 0);
+        Assert.IsTrue(H5F.get_mdc_hit_rate(m_v2_test_file, ref rate) >= 0);
+    }
 
-        [TestMethod]
-        public void H5Fget_mdc_hit_rateTest2()
-        {
-            double rate = 0.0;
-            Assert.IsFalse(
-                H5F.get_mdc_hit_rate(Utilities.RandomInvalidHandle(),
-                ref rate) >= 0);
-        }
+    [TestMethod]
+    public void H5Fget_mdc_hit_rateTest2()
+    {
+        double rate = 0.0;
+        Assert.IsFalse(
+            H5F.get_mdc_hit_rate(Utilities.RandomInvalidHandle(),
+            ref rate) >= 0);
     }
 }

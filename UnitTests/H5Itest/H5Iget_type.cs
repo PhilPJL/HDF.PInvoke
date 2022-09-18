@@ -13,42 +13,33 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5ITest
 {
-    public partial class H5ITest
+    [TestMethod]
+    public void H5Iget_typeTest1()
     {
-        [TestMethod]
-        public void H5Iget_typeTest1()
-        {
-            Assert.IsTrue(H5I.get_type(m_v0_class_file) == H5I.type_t.FILE);
-            hid_t gid = H5G.create(m_v0_test_file, "A");
-            Assert.IsTrue(gid > 0);
-            Assert.IsTrue(H5I.get_type(gid) == H5I.type_t.GROUP);
-            Assert.IsTrue(H5G.close(gid) >= 0);
+        Assert.IsTrue(H5I.get_type(m_v0_class_file) == H5I.type_t.FILE);
+        hid_t gid = H5G.create(m_v0_test_file, "A");
+        Assert.IsTrue(gid > 0);
+        Assert.IsTrue(H5I.get_type(gid) == H5I.type_t.GROUP);
+        Assert.IsTrue(H5G.close(gid) >= 0);
 
-            Assert.IsTrue(H5I.get_type(m_v2_class_file) == H5I.type_t.FILE);
-            gid = H5G.create(m_v2_test_file, "A");
-            Assert.IsTrue(gid > 0);
-            Assert.IsTrue(H5I.get_type(gid) == H5I.type_t.GROUP);
-            Assert.IsTrue(H5G.close(gid) >= 0);
-        }
+        Assert.IsTrue(H5I.get_type(m_v2_class_file) == H5I.type_t.FILE);
+        gid = H5G.create(m_v2_test_file, "A");
+        Assert.IsTrue(gid > 0);
+        Assert.IsTrue(H5I.get_type(gid) == H5I.type_t.GROUP);
+        Assert.IsTrue(H5G.close(gid) >= 0);
+    }
 
-        [TestMethod]
-        public void H5Iget_typeTest2()
-        {
-            Assert.IsTrue(H5I.get_type(Utilities.RandomInvalidHandle()) ==
-                H5I.type_t.BADID);
-        }
+    [TestMethod]
+    public void H5Iget_typeTest2()
+    {
+        Assert.IsTrue(H5I.get_type(Utilities.RandomInvalidHandle()) ==
+            H5I.type_t.BADID);
     }
 }

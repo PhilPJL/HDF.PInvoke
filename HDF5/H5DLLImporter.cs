@@ -13,34 +13,27 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using System.Runtime.InteropServices;
-using System.Text;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace HDF.PInvoke
+
+namespace HDF.PInvoke;
+
+internal delegate T Converter<T>(IntPtr address);
+
+/// <summary>
+/// Helper class used to fetch public variables (e.g. native type values)
+/// exported by the HDF5 DLL
+/// </summary>
+internal abstract class H5DLLImporter
 {
-    internal delegate T Converter<T>( IntPtr address );
+    public static readonly H5DLLImporter Instance;
 
-    /// <summary>
-    /// Helper class used to fetch public variables (e.g. native type values)
-    /// exported by the HDF5 DLL
-    /// </summary>
-    internal abstract class H5DLLImporter
+    static H5DLLImporter()
     {
-        public static readonly H5DLLImporter Instance;
+        H5.open();
 
-        static H5DLLImporter()
+        switch (Environment.OSVersion.Platform)
         {
-            H5.open();
-
-            switch (Environment.OSVersion.Platform)
-            {
             case PlatformID.Win32NT:
             case PlatformID.Win32S:
             case PlatformID.Win32Windows:
@@ -53,134 +46,137 @@ namespace HDF.PInvoke
                 Instance = new H5UnixDllImporter(Constants.DLLFileName);
                 break;
             default:
-                throw new NotImplementedException();;
-            }
-        }
-
-        protected abstract IntPtr _GetAddress(string varName);
-
-        public IntPtr GetAddress(string varName)
-        {
-            var address = _GetAddress(varName);
-            if (address == IntPtr.Zero)
-                throw new Exception(string.Format("The export with name \"{0}\" doesn't exist.", varName));
-            return address;
-        }
-
-        public bool GetAddress(string varName, out IntPtr address)
-        {
-            address = _GetAddress(varName);
-            return (address == IntPtr.Zero);
-        }
-
-        /*public bool GetValue<T>(
-            string          varName,
-            ref T           value,
-            Func<IntPtr, T> converter
-            )
-        {
-            IntPtr address;
-            if (!this.GetAddress(varName, out address))
-                return false;
-            value = converter(address);
-            return true;
-
-            //return (T) Marshal.PtrToStructure(address,typeof(T));
-        }*/
-
-        public unsafe hid_t GetHid(string varName)
-        {
-            return *(hid_t*) this.GetAddress(varName);
+                throw new NotImplementedException(); ;
         }
     }
 
-    #region Windows Importer
-    internal class H5WindowsDLLImporter : H5DLLImporter
+    protected abstract IntPtr _GetAddress(string varName);
+
+    public IntPtr GetAddress(string varName)
     {
-        [DllImport("kernel32.dll", SetLastError = true)]
-        internal static extern IntPtr GetModuleHandle(string lpszLib);
+        var address = _GetAddress(varName);
+        if (address == IntPtr.Zero)
+            throw new Exception(string.Format("The export with name \"{0}\" doesn't exist.", varName));
+        return address;
+    }
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        internal static extern IntPtr GetProcAddress
-            (IntPtr hModule, string procName);
+    public bool GetAddress(string varName, out IntPtr address)
+    {
+        address = _GetAddress(varName);
+        return (address == IntPtr.Zero);
+    }
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        internal static extern IntPtr LoadLibrary(string lpszLib);
+    /*public bool GetValue<T>(
+        string          varName,
+        ref T           value,
+        Func<IntPtr, T> converter
+        )
+    {
+        IntPtr address;
+        if (!this.GetAddress(varName, out address))
+            return false;
+        value = converter(address);
+        return true;
 
-        private IntPtr hLib;
+        //return (T) Marshal.PtrToStructure(address,typeof(T));
+    }*/
 
-        public H5WindowsDLLImporter(string libName)
+    public unsafe hid_t GetHid(string varName)
+    {
+        return *(hid_t*)this.GetAddress(varName);
+    }
+}
+
+#region Windows Importer
+internal class H5WindowsDLLImporter : H5DLLImporter
+{
+    [DllImport("kernel32.dll", SetLastError = true)]
+    internal static extern IntPtr GetModuleHandle(string lpszLib);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    internal static extern IntPtr GetProcAddress
+        (IntPtr hModule, string procName);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    internal static extern IntPtr LoadLibrary(string lpszLib);
+
+    private IntPtr hLib;
+
+    public H5WindowsDLLImporter(string libName)
+    {
+        hLib = GetModuleHandle(libName);
+        if (hLib == IntPtr.Zero)  // the library hasn't been loaded
         {
-            hLib = GetModuleHandle(libName);
-            if (hLib == IntPtr.Zero)  // the library hasn't been loaded
+            hLib = LoadLibrary(libName);
+            if (hLib == IntPtr.Zero)
             {
-                hLib = LoadLibrary(libName);
-                if (hLib == IntPtr.Zero)
+                try
                 {
-                    try
-                    {
-                        Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
-                    }
-                    catch (Exception e)
-                    {
-                        throw new Exception(string.Format("Couldn't load library \"{0}\"", libName), e);
-                    }
+                    Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(string.Format("Couldn't load library \"{0}\"", libName), e);
                 }
             }
         }
+    }
 
-        protected override IntPtr _GetAddress(string varName)
+    protected override IntPtr _GetAddress(string varName)
+    {
+        return GetProcAddress(hLib, varName);
+    }
+}
+#endregion
+
+internal class H5UnixDllImporter : H5DLLImporter
+{
+
+    [DllImport("libdl.so")]
+    protected static extern IntPtr dlopen(string filename, int flags);
+
+    [DllImport("libdl.so")]
+    protected static extern IntPtr dlsym(IntPtr handle, string symbol);
+
+    [DllImport("libdl.so")]
+    protected static extern IntPtr dlerror();
+
+    private IntPtr hLib;
+
+    public H5UnixDllImporter(string libName)
+    {
+        if (libName == "hdf5.dll")
         {
-            return GetProcAddress(hLib, varName);
+            libName = "/usr/lib/libhdf5.so";
+
+        }
+        if (libName == "hdf5_hd.dll")
+        {
+            libName = "/usr/lib/libhdf5_hl.so";
+        }
+
+
+
+        hLib = dlopen(libName, RTLD_NOW);
+        if (hLib == IntPtr.Zero)
+        {
+            throw new ArgumentException(
+                String.Format(
+                    "Unable to load unmanaged module \"{0}\"",
+                    libName));
         }
     }
-    #endregion
 
-	internal class H5UnixDllImporter : H5DLLImporter{
-
-		[DllImport("libdl.so")]
-		protected static extern IntPtr dlopen(string filename, int flags);
-
-		[DllImport("libdl.so")]
-		protected static extern IntPtr dlsym(IntPtr handle, string symbol);
-
-		[DllImport("libdl.so")]
-		protected static extern IntPtr dlerror ();
-
-        private IntPtr hLib;
-
-        public H5UnixDllImporter(string libName)
+    const int RTLD_NOW = 2; // for dlopen's flags
+    protected override IntPtr _GetAddress(string varName)
+    {
+        var address = dlsym(hLib, varName);
+        var errPtr = dlerror();
+        if (errPtr != IntPtr.Zero)
         {
-			if (libName == "hdf5.dll") {
-				libName = "/usr/lib/libhdf5.so";
-
-			}
-			if (libName == "hdf5_hd.dll") {
-				libName = "/usr/lib/libhdf5_hl.so";
-			}
-				
-
-
-			hLib = dlopen(libName, RTLD_NOW);
-			if (hLib==IntPtr.Zero)
-			{
-				throw new ArgumentException(
-					String.Format(
-						"Unable to load unmanaged module \"{0}\"",
-						libName));
-			}
+            throw new Exception("dlsym: " + Marshal.PtrToStringAnsi(errPtr));
         }
 
-		const int RTLD_NOW = 2; // for dlopen's flags
-		protected override IntPtr _GetAddress(string varName)
-		{
-			var address = dlsym(hLib, varName);
-			var errPtr = dlerror();
-			if(errPtr != IntPtr.Zero){
-				throw new Exception("dlsym: " + Marshal.PtrToStringAnsi(errPtr));
-			}
-
-			return address;
-		}
-	}
+        return address;
+    }
 }

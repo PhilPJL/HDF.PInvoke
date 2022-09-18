@@ -3,7 +3,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Configurations>HDF5 1.8 Debug; HDF5 1.8 Release;HDF5 1.10 Debug; HDF5 1.10 Release;</Configurations>
+    <Configurations>HDF5 1.10 Debug; HDF5 1.10 Release;</Configurations>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -14,31 +16,17 @@
   <PropertyGroup>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'HDF5 1.8 Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\HDF5 1.8 Debug\</OutputPath>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\HDF5 1.8 Debug\HDF.PInvoke.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'HDF5 1.8 Release|AnyCPU'">
-    <OutputPath>bin\HDF5 1.8 Release\</OutputPath>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\HDF5 1.8 Release\HDF.PInvoke.XML</DocumentationFile>
-    <Optimize>true</Optimize>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'HDF5 1.10 Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\HDF5 1.10 Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;HDF5_VER1_10</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\HDF5 1.10 Debug\HDF.PInvoke.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'HDF5 1.10 Release|AnyCPU'">
     <OutputPath>bin\HDF5 1.10 Release\</OutputPath>
-    <DefineConstants>TRACE;HDF5_VER1_10</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>bin\HDF5 1.10 Release\HDF.PInvoke.XML</DocumentationFile>
     <Optimize>true</Optimize>

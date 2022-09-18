@@ -13,39 +13,31 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5FTest
 {
-    public partial class H5FTest
+    [TestMethod]
+    public void H5Fget_vfd_handleTest1()
     {
-        [TestMethod]
-        public void H5Fget_vfd_handleTest1()
-        {
-            IntPtr hnd = IntPtr.Zero;
-            Assert.IsTrue(
-                H5F.get_vfd_handle(m_v0_class_file, H5P.DEFAULT, ref hnd) >= 0);
-            Assert.IsTrue(hnd != IntPtr.Zero);
-            Assert.IsTrue(
-                H5F.get_vfd_handle(m_v2_class_file, H5P.DEFAULT, ref hnd) >= 0);
-            Assert.IsTrue(hnd != IntPtr.Zero);
-        }
+        IntPtr hnd = IntPtr.Zero;
+        Assert.IsTrue(
+            H5F.get_vfd_handle(m_v0_class_file, H5P.DEFAULT, ref hnd) >= 0);
+        Assert.IsTrue(hnd != IntPtr.Zero);
+        Assert.IsTrue(
+            H5F.get_vfd_handle(m_v2_class_file, H5P.DEFAULT, ref hnd) >= 0);
+        Assert.IsTrue(hnd != IntPtr.Zero);
+    }
 
-        [TestMethod]
-        public void H5Fget_vfd_handleTest2()
-        {
-            IntPtr hnd = new IntPtr();
-            Assert.IsFalse(
-                H5F.get_vfd_handle(Utilities.RandomInvalidHandle(),
-                H5P.DEFAULT, ref hnd) >= 0);
-        }
+    [TestMethod]
+    public void H5Fget_vfd_handleTest2()
+    {
+        IntPtr hnd = new IntPtr();
+        Assert.IsFalse(
+            H5F.get_vfd_handle(Utilities.RandomInvalidHandle(),
+            H5P.DEFAULT, ref hnd) >= 0);
     }
 }

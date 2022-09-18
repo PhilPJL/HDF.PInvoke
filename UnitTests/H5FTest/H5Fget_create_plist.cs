@@ -13,36 +13,28 @@
  * access to either file, you may request a copy from help@hdfgroup.org.     *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HDF.PInvoke;
 
-#if HDF5_VER1_10
-using hid_t = System.Int64;
-#else
-using hid_t = System.Int32;
-#endif
 
-namespace UnitTests
+
+namespace UnitTests;
+
+public partial class H5FTest
 {
-    public partial class H5FTest
+    [TestMethod]
+    public void H5Fget_create_plistTest1()
     {
-        [TestMethod]
-        public void H5Fget_create_plistTest1()
-        {
-            hid_t fcpl = H5F.get_create_plist(m_v0_class_file);
-            Assert.IsTrue(fcpl >= 0);
-            Assert.IsTrue(H5P.close(fcpl) >= 0);
-            fcpl = H5F.get_create_plist(m_v2_class_file);
-            Assert.IsTrue(fcpl >= 0);
-            Assert.IsTrue(H5P.close(fcpl) >= 0);
-        }
+        hid_t fcpl = H5F.get_create_plist(m_v0_class_file);
+        Assert.IsTrue(fcpl >= 0);
+        Assert.IsTrue(H5P.close(fcpl) >= 0);
+        fcpl = H5F.get_create_plist(m_v2_class_file);
+        Assert.IsTrue(fcpl >= 0);
+        Assert.IsTrue(H5P.close(fcpl) >= 0);
+    }
 
-        [TestMethod]
-        public void H5Fget_create_plistTest2()
-        {
-            Assert.IsFalse(
-                H5F.get_create_plist(Utilities.RandomInvalidHandle()) >= 0);
-        }
+    [TestMethod]
+    public void H5Fget_create_plistTest2()
+    {
+        Assert.IsFalse(
+            H5F.get_create_plist(Utilities.RandomInvalidHandle()) >= 0);
     }
 }
