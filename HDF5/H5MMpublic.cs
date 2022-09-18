@@ -15,7 +15,7 @@
 
 namespace HDF.PInvoke;
 
-public unsafe sealed class H5MM
+public sealed unsafe class H5MM
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate IntPtr allocate_t(size_t size, IntPtr alloc_info);

@@ -19,7 +19,7 @@ using hssize_t = System.Int64;
 
 namespace HDF.PInvoke;
 
-public unsafe sealed class H5
+public sealed unsafe class H5
 {
     static H5()
     {

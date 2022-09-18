@@ -177,7 +177,7 @@ public partial class H5DTest
 
     private static hid_t m_v2_ascii_dset = -1;
 
-    private static ArrayList m_utf8strings = new ArrayList() { "Ελληνικά", "日本語", "العربية", "экземпляр", "סקרן" };
+    private static readonly ArrayList m_utf8strings = new() { "Ελληνικά", "日本語", "العربية", "экземпляр", "סקרן" };
 
     private static hid_t m_v0_utf8_dset = -1;
 

@@ -97,7 +97,7 @@ public partial class H5OTest
 
     private string m_v2_test_file_name;
 
-    private static string[] m_utf8strings = new string[] { "Ελληνικά", "日本語", "العربية", "экземпляр", "סקרן" };
+    private static readonly string[] m_utf8strings = new string[] { "Ελληνικά", "日本語", "العربية", "экземпляр", "סקרן" };
 
     // Callback for H5O.visit and H5O.visit_by_name
     // We expect an array list as op_data, add the attribute names to the
@@ -116,7 +116,7 @@ public partial class H5OTest
         while (Marshal.ReadByte(name, len) != 0) { ++len; }
         byte[] name_buf = new byte[len];
         Marshal.Copy(name, name_buf, 0, len);
-        al.Add(Encoding.UTF8.GetString(name_buf));
+        _ = al.Add(Encoding.UTF8.GetString(name_buf));
         return 0;
     }
 }

@@ -17,9 +17,9 @@ using uint32_t = System.UInt32;
 
 namespace HDF.PInvoke;
 
-public unsafe sealed class H5PL
+public sealed unsafe class H5PL
 {
-    static H5PL() { H5.open(); }
+    static H5PL() { _ = H5.open(); }
 
     public enum type_t
     {

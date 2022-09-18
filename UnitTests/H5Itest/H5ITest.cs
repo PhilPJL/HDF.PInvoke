@@ -96,7 +96,7 @@ public partial class H5ITest
 
     private string m_v2_test_file_name;
 
-    private static string[] m_utf8strings = new string[] { "Ελληνικά", "日本語", "العربية", "экземпляр", "סקרן" };
+    private static readonly string[] m_utf8strings = new string[] { "Ελληνικά", "日本語", "العربية", "экземпляр", "סקרן" };
 
     // Callback for H5I.search
     public int DelegateMethod

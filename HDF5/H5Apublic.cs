@@ -15,9 +15,9 @@
 
 namespace HDF.PInvoke;
 
-public unsafe sealed class H5A
+public sealed unsafe class H5A
 {
-    static H5A() { H5.open(); }
+    static H5A() { _ = H5.open(); }
 
     /// <summary>
     /// Information struct for attribute
@@ -78,7 +78,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aclose",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t close(hid_t attr_id);
+    public static extern herr_t close(hid_t attr_id);
 
     /// <summary>
     /// Creates an attribute attached to a specified object.
@@ -95,7 +95,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Acreate2",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t create
+    public static extern hid_t create
         (hid_t loc_id, byte[] attr_name, hid_t type_id, hid_t space_id,
         hid_t acpl_id = H5P.DEFAULT, hid_t aapl_id = H5P.DEFAULT);
 
@@ -112,11 +112,9 @@ public unsafe sealed class H5A
     /// <returns>Returns an attribute identifier if successful; otherwise
     /// returns a negative value.</returns>
     /// <remarks>ASCII strings ONLY!</remarks>
-    [DllImport(Constants.DLLFileName, EntryPoint = "H5Acreate2",
-        CharSet = CharSet.Ansi,
-        CallingConvention = CallingConvention.Cdecl),
+    [DllImport(Constants.DLLFileName, EntryPoint = "H5Acreate2", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t create
+    public static extern hid_t create
         (hid_t loc_id, string attr_name, hid_t type_id, hid_t space_id,
         hid_t acpl_id = H5P.DEFAULT, hid_t aapl_id = H5P.DEFAULT);
 
@@ -139,7 +137,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Acreate_by_name",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t create_by_name
+    public static extern hid_t create_by_name
         (hid_t loc_id, byte[] obj_name, byte[] attr_name, hid_t type_id,
         hid_t space_id, hid_t acpl_id = H5P.DEFAULT,
         hid_t aapl_id = H5P.DEFAULT, hid_t lapl_id = H5P.DEFAULT);
@@ -165,7 +163,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t create_by_name
+    public static extern hid_t create_by_name
         (hid_t loc_id, string obj_name, string attr_name, hid_t type_id,
         hid_t space_id, hid_t acpl_id = H5P.DEFAULT,
         hid_t aapl_id = H5P.DEFAULT, hid_t lapl_id = H5P.DEFAULT);
@@ -182,7 +180,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Adelete",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t delete(hid_t loc_id, byte[] name);
+    public static extern herr_t delete(hid_t loc_id, byte[] name);
 
     /// <summary>
     /// Deletes an attribute from a specified location.
@@ -198,7 +196,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t delete(hid_t loc_id, string name);
+    public static extern herr_t delete(hid_t loc_id, string name);
 
     /// <summary>
     /// Deletes an attribute from an object according to index order.
@@ -217,7 +215,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Adelete_by_idx",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t delete_by_idx
+    public static extern herr_t delete_by_idx
         (hid_t loc_id, byte[] obj_name, H5.index_t idx_type,
         H5.iter_order_t order, hsize_t n, hid_t lapl_id = H5P.DEFAULT);
 
@@ -240,7 +238,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t delete_by_idx
+    public static extern herr_t delete_by_idx
         (hid_t loc_id, string obj_name, H5.index_t idx_type,
         H5.iter_order_t order, hsize_t n, hid_t lapl_id = H5P.DEFAULT);
 
@@ -259,7 +257,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Adelete_by_name",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t delete_by_name
+    public static extern herr_t delete_by_name
         (hid_t loc_id, byte[] obj_name, byte[] attr_name,
         hid_t lapl_id = H5P.DEFAULT);
 
@@ -280,7 +278,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t delete_by_name
+    public static extern herr_t delete_by_name
         (hid_t loc_id, string obj_name, string attr_name,
         hid_t lapl_id = H5P.DEFAULT);
 
@@ -296,7 +294,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aexists",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static htri_t exists(hid_t obj_id, byte[] attr_name);
+    public static extern htri_t exists(hid_t obj_id, byte[] attr_name);
 
     /// <summary>
     /// Determines whether an attribute with a given name exists on an object.
@@ -312,7 +310,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static htri_t exists(hid_t obj_id, string attr_name);
+    public static extern htri_t exists(hid_t obj_id, string attr_name);
 
     /// <summary>
     /// Determines whether an attribute with a given name exists on an object.
@@ -328,7 +326,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aexists_by_name",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static htri_t exists_by_name
+    public static extern htri_t exists_by_name
         (hid_t loc_id, byte[] obj_name, byte[] attr_name,
         hid_t lapl_id = H5P.DEFAULT);
 
@@ -348,7 +346,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static htri_t exists_by_name
+    public static extern htri_t exists_by_name
         (hid_t loc_id, string obj_name, string attr_name,
         hid_t lapl_id = H5P.DEFAULT);
 
@@ -362,7 +360,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aget_create_plist",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t get_create_plist(hid_t attr_id);
+    public static extern hid_t get_create_plist(hid_t attr_id);
 
     /// <summary>
     /// Retrieves attribute information, by attribute identifier.
@@ -375,7 +373,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aget_info",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_info(hid_t attr_id, ref info_t ainfo);
+    public static extern herr_t get_info(hid_t attr_id, ref info_t ainfo);
 
     /// <summary>
     /// Retrieves attribute information, by attribute index position.
@@ -396,7 +394,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aget_info_by_idx",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_info_by_idx
+    public static extern herr_t get_info_by_idx
         (hid_t loc_id, byte[] obj_name,
         H5.index_t idx_type, H5.iter_order_t order, hsize_t n,
         ref info_t ainfo, hid_t lapl_id = H5P.DEFAULT);
@@ -422,7 +420,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_info_by_idx
+    public static extern herr_t get_info_by_idx
         (hid_t loc_id, string obj_name,
         H5.index_t idx_type, H5.iter_order_t order, hsize_t n,
         ref info_t ainfo, hid_t lapl_id = H5P.DEFAULT);
@@ -444,7 +442,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aget_info_by_name",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_info_by_name
+    public static extern herr_t get_info_by_name
         (hid_t loc_id, byte[] obj_name, byte[] attr_name,
         ref info_t ainfo, hid_t lapl_id = H5P.DEFAULT);
 
@@ -467,7 +465,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_info_by_name
+    public static extern herr_t get_info_by_name
         (hid_t loc_id, string obj_name, string attr_name,
         ref info_t ainfo, hid_t lapl_id = H5P.DEFAULT);
 
@@ -485,7 +483,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aget_name",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_name(
+    public static extern ssize_t get_name(
         hid_t attr_id, size_t size, [In][Out] byte[] name);
 
     /// <summary>
@@ -504,7 +502,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_name(
+    public static extern ssize_t get_name(
         hid_t attr_id, size_t size, [In][Out] StringBuilder name);
 
     /// <summary>
@@ -526,7 +524,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aget_name_by_idx",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_name_by_idx
+    public static extern ssize_t get_name_by_idx
         (hid_t loc_id, byte[] obj_name,
         H5.index_t idx_type, H5.iter_order_t order, hsize_t n,
         [In][Out] byte[] name, size_t size, hid_t lapl_id = H5P.DEFAULT);
@@ -552,7 +550,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_name_by_idx
+    public static extern ssize_t get_name_by_idx
         (hid_t loc_id, string obj_name,
         H5.index_t idx_type, H5.iter_order_t order, hsize_t n,
         [In][Out] StringBuilder name, size_t size, hid_t lapl_id = H5P.DEFAULT);
@@ -578,7 +576,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aget_name_by_idx",
         CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_name_by_idx(hid_t loc_id, string obj_name,
+    public static extern ssize_t get_name_by_idx(hid_t loc_id, string obj_name,
         H5.index_t idx_type, H5.iter_order_t order, hsize_t n, IntPtr name,
         size_t size, hid_t lapl_id);
 
@@ -592,7 +590,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aget_space",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t get_space(hid_t attr_id);
+    public static extern hid_t get_space(hid_t attr_id);
 
     /// <summary>
     /// Returns the amount of storage required for an attribute.
@@ -604,7 +602,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aget_storage_size",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hsize_t get_storage_size(hid_t attr_id);
+    public static extern hsize_t get_storage_size(hid_t attr_id);
 
     /// <summary>
     /// Returns the amount of storage required for an attribute.
@@ -616,7 +614,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aget_type",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t get_type(hid_t attr_id);
+    public static extern hid_t get_type(hid_t attr_id);
 
     /// <summary>
     /// Calls user-defined function for each attribute on an object.
@@ -639,7 +637,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aiterate2",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t iterate
+    public static extern herr_t iterate
         (hid_t obj_id, H5.index_t idx_type, H5.iter_order_t order,
         ref hsize_t n, operator_t op, IntPtr op_data);
 
@@ -665,7 +663,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aiterate_by_name",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t iterate_by_name(hid_t loc_id,
+    public static extern herr_t iterate_by_name(hid_t loc_id,
         byte[] obj_name, H5.index_t idx_type, H5.iter_order_t order,
         ref hsize_t n, operator_t op, IntPtr op_data,
         hid_t lapd_id = H5P.DEFAULT);
@@ -694,7 +692,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t iterate_by_name(hid_t loc_id,
+    public static extern herr_t iterate_by_name(hid_t loc_id,
         string obj_name, H5.index_t idx_type, H5.iter_order_t order,
         ref hsize_t n, operator_t op, IntPtr op_data,
         hid_t lapd_id = H5P.DEFAULT);
@@ -713,7 +711,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aopen",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open
+    public static extern hid_t open
         (hid_t obj_id, byte[] attr_name, hid_t aapl_id = H5P.DEFAULT);
 
     /// <summary>
@@ -732,7 +730,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open
+    public static extern hid_t open
         (hid_t obj_id, string attr_name, hid_t aapl_id = H5P.DEFAULT);
 
     /// <summary>
@@ -754,7 +752,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aopen_by_idx",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open_by_idx
+    public static extern hid_t open_by_idx
         (hid_t loc_id, byte[] obj_name,
         H5.index_t idx_type, H5.iter_order_t order, hsize_t n,
         hid_t aapl_id = H5P.DEFAULT, hid_t lapl_id = H5P.DEFAULT);
@@ -780,7 +778,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open_by_idx
+    public static extern hid_t open_by_idx
         (hid_t loc_id, string obj_name,
         H5.index_t idx_type, H5.iter_order_t order, hsize_t n,
         hid_t aapl_id = H5P.DEFAULT, hid_t lapl_id = H5P.DEFAULT);
@@ -801,7 +799,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aopen_by_name",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open_by_name
+    public static extern hid_t open_by_name
         (hid_t loc_id, byte[] obj_name, byte[] attr_name,
         hid_t aapl_id = H5P.DEFAULT, hid_t lapl_id = H5P.DEFAULT);
 
@@ -823,7 +821,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open_by_name
+    public static extern hid_t open_by_name
         (hid_t loc_id, string obj_name, string attr_name,
         hid_t aapl_id = H5P.DEFAULT, hid_t lapl_id = H5P.DEFAULT);
 
@@ -840,7 +838,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Aread",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t read
+    public static extern herr_t read
         (hid_t attr_id, hid_t type_id, IntPtr buf);
 
     /// <summary>
@@ -855,7 +853,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Arename",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t rename
+    public static extern herr_t rename
         (hid_t loc_id, byte[] old_name, byte[] new_name);
 
     /// <summary>
@@ -872,7 +870,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t rename
+    public static extern herr_t rename
         (hid_t loc_id, string old_name, string new_name);
 
     /// <summary>
@@ -891,7 +889,7 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Arename_by_name",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t rename_by_name
+    public static extern herr_t rename_by_name
         (hid_t loc_id, byte[] obj_name, byte[] old_attr_name,
         byte[] new_attr_name, hid_t lapl_id = H5P.DEFAULT);
 
@@ -913,7 +911,7 @@ public unsafe sealed class H5A
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t rename_by_name
+    public static extern herr_t rename_by_name
         (hid_t loc_id, string obj_name, string old_attr_name,
         string new_attr_name, hid_t lapl_id = H5P.DEFAULT);
 
@@ -928,6 +926,6 @@ public unsafe sealed class H5A
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Awrite",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t write
+    public static extern herr_t write
         (hid_t attr_id, hid_t mem_type_id, IntPtr buf);
 }

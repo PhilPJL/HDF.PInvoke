@@ -79,7 +79,7 @@ public partial class H5ATest
         File.Delete(m_v2_class_file_name);
     }
 
-    private static string[] m_utf8strings = new string[] { "Ελληνικά", "日本語", "العربية", "экземпляр", "סקרן" };
+    private static readonly string[] m_utf8strings = new string[] { "Ελληνικά", "日本語", "العربية", "экземпляр", "סקרן" };
 
     private static hid_t m_v0_class_file = -1;
 
@@ -120,7 +120,7 @@ public partial class H5ATest
         while (Marshal.ReadByte(attr_name, len) != 0) { ++len; }
         byte[] buf = new byte[len];
         Marshal.Copy(attr_name, buf, 0, len);
-        al.Add(Encoding.UTF8.GetString(buf));
+        _ = al.Add(Encoding.UTF8.GetString(buf));
         return 0;
     }
 }

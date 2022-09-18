@@ -30,7 +30,7 @@ internal abstract class H5DLLImporter
 
     static H5DLLImporter()
     {
-        H5.open();
+        _ = H5.open();
 
         switch (Environment.OSVersion.Platform)
         {
@@ -100,7 +100,7 @@ internal class H5WindowsDLLImporter : H5DLLImporter
     [DllImport("kernel32.dll", SetLastError = true)]
     internal static extern IntPtr LoadLibrary(string lpszLib);
 
-    private IntPtr hLib;
+    private readonly IntPtr hLib;
 
     public H5WindowsDLLImporter(string libName)
     {
@@ -141,7 +141,7 @@ internal class H5UnixDllImporter : H5DLLImporter
     [DllImport("libdl.so")]
     protected static extern IntPtr dlerror();
 
-    private IntPtr hLib;
+    private readonly IntPtr hLib;
 
     public H5UnixDllImporter(string libName)
     {

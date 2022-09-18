@@ -19,9 +19,9 @@ using hssize_t = System.Int64;
 
 namespace HDF.PInvoke;
 
-public unsafe sealed class H5F
+public sealed unsafe class H5F
 {
-    static H5F() { H5.open(); }
+    static H5F() { _ = H5.open(); }
 
     // Flags for H5F.open() and H5F.create() calls
 
@@ -290,7 +290,7 @@ public unsafe sealed class H5F
         /// <summary>
         /// Use the latest possible format for storing objects
         /// </summary>
-        LATEST = 2,
+        LATEST = V110,
         NBOUNDS
     }
 
@@ -410,7 +410,7 @@ public unsafe sealed class H5F
         EntryPoint = "H5Fclear_elink_file_cache",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t clear_elink_file_cache(hid_t file_id);
+    public static extern herr_t clear_elink_file_cache(hid_t file_id);
 
     /// <summary>
     /// Terminates access to an HDF5 file.
@@ -423,7 +423,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fclose",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t close(hid_t file_id);
+    public static extern herr_t close(hid_t file_id);
 
     /// <summary>
     /// Creates an HDF5 file.
@@ -442,7 +442,7 @@ public unsafe sealed class H5F
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t create
+    public static extern hid_t create
         (string filename, uint flags,
         hid_t create_plist = H5P.DEFAULT, hid_t access_plist = H5P.DEFAULT);
 
@@ -459,13 +459,13 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fflush",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t flush(hid_t object_id, scope_t scope);
+    public static extern herr_t flush(hid_t object_id, scope_t scope);
 
     [DllImport(Constants.DLLFileName,
         EntryPoint = "H5Fformat_convert_super",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t format_convert_super(hid_t fid);
+    public static extern herr_t format_convert_super(hid_t fid);
 
     /// <summary>
     /// Returns a file access property list identifier.
@@ -478,7 +478,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_access_plist",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t get_access_plist(hid_t file_id);
+    public static extern hid_t get_access_plist(hid_t file_id);
 
     /// <summary>
     /// Returns a file creation property list identifier.
@@ -491,7 +491,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_create_plist",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t get_create_plist(hid_t file_id);
+    public static extern hid_t get_create_plist(hid_t file_id);
 
     /// <summary>
     /// Retrieves the setting for whether or not a file will create minimized dataset object headers.
@@ -522,7 +522,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_file_image",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_file_image
+    public static extern ssize_t get_file_image
         (hid_t file_id, IntPtr buf_ptr, IntPtr buf_len);
 
     /// <summary>
@@ -537,7 +537,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_filesize",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_filesize
+    public static extern herr_t get_filesize
         (hid_t file_id, ref hsize_t size);
 
     /// <summary>
@@ -555,7 +555,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_free_sections",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_free_sections
+    public static extern ssize_t get_free_sections
         (hid_t file_id, mem_t type, size_t nsects,
         sect_info_t[] sect_info);
 
@@ -570,7 +570,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_freespace",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hssize_t get_freespace(hid_t file_id);
+    public static extern hssize_t get_freespace(hid_t file_id);
 
     /// <summary>
     /// Returns global information for a file.
@@ -585,7 +585,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_info2",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_info
+    public static extern herr_t get_info
         (hid_t obj_id, ref H5F.info_t bh_info);
 
     /// <summary>
@@ -601,7 +601,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_intent",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_intent(hid_t file_id, ref uint intent);
+    public static extern herr_t get_intent(hid_t file_id, ref uint intent);
 
     /// <summary>
     /// Obtain current metadata cache configuration for target file.
@@ -616,7 +616,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_mdc_config",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_mdc_config
+    public static extern herr_t get_mdc_config
         (hid_t file_id, ref H5AC.cache_config_t config_ptr);
 
     /// <summary>
@@ -631,7 +631,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_mdc_hit_rate",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_mdc_hit_rate
+    public static extern herr_t get_mdc_hit_rate
         (hid_t file_id, ref double hit_rate_ptr);
 
     /// <summary>
@@ -665,7 +665,7 @@ public unsafe sealed class H5F
         EntryPoint = "H5Fget_mdc_logging_status",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_mdc_logging_status
+    public static extern herr_t get_mdc_logging_status
         (hid_t file_id, ref hbool_t is_enabled,
         ref hbool_t is_currently_logging);
 
@@ -691,7 +691,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_mdc_size",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_mdc_size
+    public static extern herr_t get_mdc_size
         (hid_t file_id, ref size_t max_size_ptr,
         ref size_t min_clean_size_ptr, ref size_t cur_size_ptr,
         ref int cur_num_entries_ptr);
@@ -710,7 +710,7 @@ public unsafe sealed class H5F
         EntryPoint = "H5Fget_metadata_read_retry_info",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_metadata_read_retry_info
+    public static extern herr_t get_metadata_read_retry_info
         (hid_t file_id, ref retry_info_t info);
 
     /// <summary>
@@ -727,7 +727,7 @@ public unsafe sealed class H5F
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_name
+    public static extern ssize_t get_name
         (hid_t obj_id, StringBuilder name, size_t size);
 
     /// <summary>
@@ -743,7 +743,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_obj_count",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_obj_count
+    public static extern ssize_t get_obj_count
         (hid_t file_id, uint types);
 
     /// <summary>
@@ -762,7 +762,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_obj_ids",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_obj_ids
+    public static extern ssize_t get_obj_ids
         (hid_t file_id, uint types, size_t max_objs, IntPtr obj_id_list);
 
     /// <summary>
@@ -807,7 +807,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fget_vfd_handle",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_vfd_handle
+    public static extern herr_t get_vfd_handle
         (hid_t file_id, hid_t fapl, ref IntPtr file_handle);
 
     /// <summary>
@@ -822,7 +822,7 @@ public unsafe sealed class H5F
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static htri_t is_hdf5(string filename);
+    public static extern htri_t is_hdf5(string filename);
 
     /// <summary>
     /// Mounts a file.
@@ -839,7 +839,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fmount",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t mount
+    public static extern herr_t mount
         (hid_t loc, byte[] name, hid_t child, hid_t plist = H5P.DEFAULT);
 
     /// <summary>
@@ -859,7 +859,7 @@ public unsafe sealed class H5F
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t mount
+    public static extern herr_t mount
         (hid_t loc, string name, hid_t child, hid_t plist = H5P.DEFAULT);
 
     /// <summary>
@@ -878,7 +878,7 @@ public unsafe sealed class H5F
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open
+    public static extern hid_t open
         (string filename, uint flags, hid_t plist = H5P.DEFAULT);
 
     /// <summary>
@@ -892,7 +892,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Freopen",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t reopen(hid_t file_id);
+    public static extern hid_t reopen(hid_t file_id);
 
     /// <summary>
     /// Reset hit rate statistics counters for the target file.
@@ -905,7 +905,7 @@ public unsafe sealed class H5F
         EntryPoint = "H5Freset_mdc_hit_rate_stats",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t reset_mdc_hit_rate_stats(hid_t file_id);
+    public static extern herr_t reset_mdc_hit_rate_stats(hid_t file_id);
 
     /// <summary>
     /// Resets the page buffer statistics.
@@ -948,7 +948,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fset_mdc_config",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t set_mdc_config
+    public static extern herr_t set_mdc_config
         (hid_t file_id, ref H5AC.cache_config_t config_ptr);
 
     /// <summary>
@@ -962,7 +962,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fstart_mdc_logging",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t start_mdc_logging(hid_t file_id);
+    public static extern herr_t start_mdc_logging(hid_t file_id);
 
     /// <summary>
     /// Enables SWMR writing mode for a file.
@@ -974,7 +974,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fstart_swmr_write",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t start_swmr_write(hid_t file_id);
+    public static extern herr_t start_swmr_write(hid_t file_id);
 
     /// <summary>
     /// Stops logging metadata cache events if logging was previously
@@ -987,7 +987,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Fstop_mdc_logging",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t stop_mdc_logging(hid_t file_id);
+    public static extern herr_t stop_mdc_logging(hid_t file_id);
 
     /// <summary>
     /// Unmounts a file.
@@ -1001,7 +1001,7 @@ public unsafe sealed class H5F
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Funmount",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t unmount(hid_t loc, byte[] name);
+    public static extern herr_t unmount(hid_t loc, byte[] name);
 
     /// <summary>
     /// Unmounts a file.
@@ -1017,5 +1017,5 @@ public unsafe sealed class H5F
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t unmount(hid_t loc, string name);
+    public static extern herr_t unmount(hid_t loc, string name);
 }

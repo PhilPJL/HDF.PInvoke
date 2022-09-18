@@ -50,7 +50,7 @@ public partial class H5ATest
             while (Marshal.ReadByte(attr_name, len) != 0) { ++len; }
             byte[] buf = new byte[len];
             Marshal.Copy(attr_name, buf, 0, len);
-            al.Add(Encoding.UTF8.GetString(buf));
+            _ = al.Add(Encoding.UTF8.GetString(buf));
             return 0;
         };
 

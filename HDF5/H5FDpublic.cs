@@ -15,9 +15,9 @@
 
 namespace HDF.PInvoke;
 
-public unsafe sealed class H5FD
+public sealed unsafe class H5FD
 {
-    static H5FD() { H5.open(); }
+    static H5FD() { _ = H5.open(); }
 
     /// <summary>
     /// Define enum for the source of file image callbacks

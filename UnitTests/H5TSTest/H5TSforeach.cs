@@ -44,7 +44,7 @@ public partial class H5TSTest
 
             var totalLength = 0;
 
-            Parallel.ForEach<string, TaskLocals>
+            _ = Parallel.ForEach<string, TaskLocals>
                 (ls,
                 () =>
                 {
@@ -66,7 +66,7 @@ public partial class H5TSTest
                 },
                  (taskLocals) =>
                  {
-                     Interlocked.Add(ref totalLength, taskLocals.runningLength);
+                     _ = Interlocked.Add(ref totalLength, taskLocals.runningLength);
                  }
                 );
 

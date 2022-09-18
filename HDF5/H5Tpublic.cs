@@ -18,11 +18,11 @@
 
 namespace HDF.PInvoke;
 
-public unsafe sealed partial class H5T
+public sealed unsafe partial class H5T
 {
     static H5T()
     {
-        H5.open();
+        _ = H5.open();
     }
 
     /// <summary>
@@ -442,7 +442,7 @@ public unsafe sealed partial class H5T
     /// Indicate that a string is variable length (null-terminated in C,
     /// instead of fixed length)
     /// </summary>
-    public static readonly IntPtr VARIABLE = new IntPtr(-1);
+    public static readonly IntPtr VARIABLE = new(-1);
 
     /// <summary>
     /// Maximum length of an opaque tag

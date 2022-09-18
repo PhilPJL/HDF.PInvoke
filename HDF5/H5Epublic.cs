@@ -18,11 +18,11 @@
 
 namespace HDF.PInvoke;
 
-public unsafe sealed partial class H5E
+public sealed unsafe partial class H5E
 {
     static H5E()
     {
-        H5.open();
+        _ = H5.open();
     }
 
     /// <summary>

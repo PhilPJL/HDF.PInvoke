@@ -19,9 +19,9 @@ using uint32_t = System.UInt32;
 
 namespace HDF.PInvoke;
 
-public unsafe sealed class H5DO
+public sealed unsafe class H5DO
 {
-    static H5DO() { H5.open(); }
+    static H5DO() { _ = H5.open(); }
 
     /// <summary>
     /// Reads a raw data chunk directly from a dataset in a file into a buffer.

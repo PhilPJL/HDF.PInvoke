@@ -22,7 +22,7 @@ class Utilities
 {
     public static void DisableErrorPrinting()
     {
-        H5E.set_auto(H5E.DEFAULT, null, IntPtr.Zero);
+        _ = H5E.set_auto(H5E.DEFAULT, null, IntPtr.Zero);
     }
 
     /// <summary>

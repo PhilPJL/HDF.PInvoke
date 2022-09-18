@@ -18,9 +18,9 @@
 
 namespace HDF.PInvoke;
 
-public unsafe sealed class H5I
+public sealed unsafe class H5I
 {
-    static H5I() { H5.open(); }
+    static H5I() { _ = H5.open(); }
 
     public enum type_t
     {
@@ -125,7 +125,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iclear_type",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t clear_type(type_t type, hbool_t force);
+    public static extern herr_t clear_type(type_t type, hbool_t force);
 
     /// <summary>
     /// Decrements the reference count for an object.
@@ -139,7 +139,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Idec_ref",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static int dec_ref(hid_t obj_id);
+    public static extern int dec_ref(hid_t obj_id);
 
     /// <summary>
     /// Decrements the reference count on an identifier type.
@@ -152,7 +152,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Idec_type_ref",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static int dec_type_ref(type_t type);
+    public static extern int dec_type_ref(type_t type);
 
     /// <summary>
     /// Removes the type type and all identifiers within that type.
@@ -164,7 +164,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Idestroy_type",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t destroy_type(type_t type);
+    public static extern herr_t destroy_type(type_t type);
 
     /// <summary>
     /// Retrieves an identifier for the file containing the specified object.
@@ -176,7 +176,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iget_file_id",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t get_file_id(hid_t obj_id);
+    public static extern hid_t get_file_id(hid_t obj_id);
 
     /// <summary>
     /// Retrieves a name of an object based on the object identifier.
@@ -196,7 +196,7 @@ public unsafe sealed class H5I
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_name
+    public static extern ssize_t get_name
         (hid_t obj_id, [In][Out] StringBuilder name, size_t size);
 
     /// <summary>
@@ -211,7 +211,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iget_ref",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static int get_ref(hid_t obj_id);
+    public static extern int get_ref(hid_t obj_id);
 
     /// <summary>
     /// Retrieves the type of an object.
@@ -224,7 +224,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iget_type",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static type_t get_type(hid_t obj_id);
+    public static extern type_t get_type(hid_t obj_id);
 
     /// <summary>
     /// Retrieves the reference count on an ID type.
@@ -237,7 +237,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iget_type",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static int H5Iget_type_ref(type_t type);
+    public static extern int H5Iget_type_ref(type_t type);
 
     /// <summary>
     /// Increments the reference count for an object.
@@ -251,7 +251,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iinc_ref",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static int inc_ref(hid_t obj_id);
+    public static extern int inc_ref(hid_t obj_id);
 
     /// <summary>
     /// Increments the reference count on an ID type.
@@ -264,7 +264,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iinc_type_ref",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static int inc_type_ref(type_t type);
+    public static extern int inc_type_ref(type_t type);
 
     /// <summary>
     /// Determines whether an identifier is valid.
@@ -277,7 +277,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iis_valid",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static htri_t is_valid(hid_t obj_id);
+    public static extern htri_t is_valid(hid_t obj_id);
 
     /// <summary>
     /// Returns the number of identifiers in a given identifier type.
@@ -292,7 +292,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Inmembers",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t nmembers
+    public static extern herr_t nmembers
         (type_t type, ref hsize_t num_members);
 
     /// <summary>
@@ -306,7 +306,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iobject_verify",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static IntPtr object_verify
+    public static extern IntPtr object_verify
         (hid_t id, type_t id_type);
 
     /// <summary>
@@ -320,7 +320,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iregister",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t register(type_t type, IntPtr obj);
+    public static extern hid_t register(type_t type, IntPtr obj);
 
     /// <summary>
     /// Creates and returns a new ID type.
@@ -336,7 +336,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iregister_type",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static type_t register_type
+    public static extern type_t register_type
         (size_t hash_size, uint reserved, free_t free_func);
 
     /// <summary>
@@ -351,7 +351,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Iremove_verify",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static IntPtr remove_verify
+    public static extern IntPtr remove_verify
         (hid_t id, type_t id_type);
 
     /// <summary>
@@ -367,7 +367,7 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Isearch",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static IntPtr search
+    public static extern IntPtr search
         (type_t type, search_func_t func, IntPtr key);
 
     /// <summary>
@@ -380,5 +380,5 @@ public unsafe sealed class H5I
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Itype_exists",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static htri_t type_exists(type_t type);
+    public static extern htri_t type_exists(type_t type);
 }

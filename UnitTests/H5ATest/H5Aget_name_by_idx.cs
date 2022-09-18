@@ -44,7 +44,7 @@ public partial class H5ATest
         // names should match
         Assert.AreEqual("H5Aget_name", name);
 
-        nameBuilder.Clear();
+        _ = nameBuilder.Clear();
         size = H5A.get_name_by_idx(m_v2_test_file, ".",
             H5.index_t.NAME, H5.iter_order_t.NATIVE,
             1, nameBuilder, buf_size);

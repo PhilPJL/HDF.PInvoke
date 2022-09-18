@@ -20,9 +20,9 @@ using uint64_t = System.UInt64;
 
 namespace HDF.PInvoke;
 
-public unsafe sealed class H5O
+public sealed unsafe class H5O
 {
-    static H5O() { H5.open(); }
+    static H5O() { _ = H5.open(); }
 
     #region Flags for object copy (H5Ocopy)
 
@@ -339,7 +339,7 @@ public unsafe sealed class H5O
         EntryPoint = "H5Oare_mdc_flushes_disabled",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t are_mdc_flushes_disabled
+    public static extern herr_t are_mdc_flushes_disabled
         (hid_t object_id, ref hbool_t are_disabled);
 
     /// <summary>
@@ -352,7 +352,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Oclose",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t
+    public static extern herr_t
         close
         (hid_t object_id);
 
@@ -374,7 +374,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Ocopy",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t copy
+    public static extern herr_t copy
         (hid_t src_loc_id, byte[] src_name, hid_t dst_loc_id,
         byte[] dst_name, hid_t ocpypl_id = H5P.DEFAULT,
         hid_t lcpl_id = H5P.DEFAULT);
@@ -399,7 +399,7 @@ public unsafe sealed class H5O
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t copy
+    public static extern herr_t copy
         (hid_t src_loc_id, string src_name, hid_t dst_loc_id,
         string dst_name, hid_t ocpypl_id = H5P.DEFAULT,
         hid_t lcpl_id = H5P.DEFAULT);
@@ -418,7 +418,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Odecr_refcount",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t decr_refcount(hid_t object_id);
+    public static extern herr_t decr_refcount(hid_t object_id);
 
     /// <summary>
     /// Prevents metadata entries for an HDF5 object from being flushed
@@ -432,7 +432,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Odisable_mdc_flushes",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t disable_mdc_flushes(hid_t object_id);
+    public static extern herr_t disable_mdc_flushes(hid_t object_id);
 
     /// <summary>
     /// Allow metadata entries for an HDF5 object to be flushed
@@ -446,7 +446,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Oenable_mdc_flushes",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t enable_mdc_flushes(hid_t object_id);
+    public static extern herr_t enable_mdc_flushes(hid_t object_id);
 
     /// <summary>
     /// Determines whether a link resolves to an actual object.
@@ -460,7 +460,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Oexists_by_name",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static htri_t exists_by_name
+    public static extern htri_t exists_by_name
         (hid_t loc_id, byte[] name, hid_t lapl_id = H5P.DEFAULT);
 
     /// <summary>
@@ -473,7 +473,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Oflush",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t flush(hid_t obj_id);
+    public static extern herr_t flush(hid_t obj_id);
 
     /// <summary>
     /// Determines whether a link resolves to an actual object.
@@ -489,7 +489,7 @@ public unsafe sealed class H5O
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static htri_t exists_by_name
+    public static extern htri_t exists_by_name
         (hid_t loc_id, string name, hid_t lapl_id = H5P.DEFAULT);
 
     /// <summary>
@@ -507,7 +507,7 @@ public unsafe sealed class H5O
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_comment
+    public static extern ssize_t get_comment
         (hid_t obj_id, [In][Out] StringBuilder comment, size_t size);
 
     /// <summary>
@@ -530,7 +530,7 @@ public unsafe sealed class H5O
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_comment_by_name
+    public static extern ssize_t get_comment_by_name
         (hid_t loc_id, byte[] name, [In][Out] StringBuilder comment, size_t size,
         hid_t lapl_id = H5P.DEFAULT);
 
@@ -555,7 +555,7 @@ public unsafe sealed class H5O
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static ssize_t get_comment_by_name
+    public static extern ssize_t get_comment_by_name
         (hid_t loc_id, string name, [In][Out] StringBuilder comment, size_t size,
         hid_t lapl_id = H5P.DEFAULT);
 
@@ -571,7 +571,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Oget_info1",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_info(hid_t loc_id, ref info_t oinfo);
+    public static extern herr_t get_info(hid_t loc_id, ref info_t oinfo);
 
     /// <summary>
     /// Retrieves the metadata for an object, identifying the object by an
@@ -591,7 +591,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Oget_info_by_idx1",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_info_by_idx
+    public static extern herr_t get_info_by_idx
         (hid_t loc_id, byte[] group_name, H5.index_t idx_type,
         H5.iter_order_t order, hsize_t n, ref info_t oinfo,
         hid_t lapl_id = H5P.DEFAULT);
@@ -616,7 +616,7 @@ public unsafe sealed class H5O
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_info_by_idx
+    public static extern herr_t get_info_by_idx
         (hid_t loc_id, string group_name, H5.index_t idx_type,
         H5.iter_order_t order, hsize_t n, ref info_t oinfo,
         hid_t lapl_id = H5P.DEFAULT);
@@ -637,7 +637,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Oget_info_by_name1",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_info_by_name
+    public static extern herr_t get_info_by_name
         (hid_t loc_id, byte[] name, ref info_t oinfo,
         hid_t lapl_id = H5P.DEFAULT);
 
@@ -659,7 +659,7 @@ public unsafe sealed class H5O
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t get_info_by_name
+    public static extern herr_t get_info_by_name
         (hid_t loc_id, string name, ref info_t oinfo,
         hid_t lapl_id = H5P.DEFAULT);
 
@@ -676,7 +676,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Oincr_refcount",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t incr_refcount(hid_t object_id);
+    public static extern herr_t incr_refcount(hid_t object_id);
 
     /// <summary>
     /// Creates a hard link to an object in an HDF5 file.
@@ -694,7 +694,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Olink",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t link
+    public static extern herr_t link
         (hid_t obj_id, hid_t new_loc_id, byte[] new_name,
         hid_t lcpl_id = H5P.DEFAULT, hid_t lapl_id = H5P.DEFAULT);
 
@@ -716,7 +716,7 @@ public unsafe sealed class H5O
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t link
+    public static extern herr_t link
         (hid_t obj_id, hid_t new_loc_id, string new_name,
         hid_t lcpl_id = H5P.DEFAULT, hid_t lapl_id = H5P.DEFAULT);
 
@@ -734,7 +734,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Oopen",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open
+    public static extern hid_t open
         (hid_t loc_id, byte[] name, hid_t lapl_id = H5P.DEFAULT);
 
     /// <summary>
@@ -753,7 +753,7 @@ public unsafe sealed class H5O
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open
+    public static extern hid_t open
         (hid_t loc_id, string name, hid_t lapl_id = H5P.DEFAULT);
 
     /// <summary>
@@ -770,7 +770,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Oopen_by_addr",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open_by_addr(hid_t loc_id, haddr_t addr);
+    public static extern hid_t open_by_addr(hid_t loc_id, haddr_t addr);
 
     /// <summary>
     /// Open the n-th object in a group.
@@ -788,7 +788,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Oopen_by_idx",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open_by_idx
+    public static extern hid_t open_by_idx
         (hid_t loc_id, byte[] group_name, H5.index_t idx_type,
         H5.iter_order_t order, hsize_t n, hid_t lapl_id = H5P.DEFAULT);
 
@@ -802,7 +802,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Orefresh",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t refresh(hid_t oid);
+    public static extern herr_t refresh(hid_t oid);
 
     /// <summary>
     /// Open the n-th object in a group.
@@ -822,7 +822,7 @@ public unsafe sealed class H5O
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static hid_t open_by_idx
+    public static extern hid_t open_by_idx
         (hid_t loc_id, string group_name, H5.index_t idx_type,
         H5.iter_order_t order, hsize_t n, hid_t lapl_id = H5P.DEFAULT);
 
@@ -846,7 +846,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Ovisit1",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t visit
+    public static extern herr_t visit
         (hid_t obj_id, H5.index_t idx_type, H5.iter_order_t order,
         iterate_t op, IntPtr op_data);
 
@@ -872,7 +872,7 @@ public unsafe sealed class H5O
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Ovisit_by_name1",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t visit_by_name
+    public static extern herr_t visit_by_name
         (hid_t loc_id, byte[] obj_name, H5.index_t idx_type,
         H5.iter_order_t order, iterate_t op, IntPtr op_data,
         hid_t lapl_id = H5P.DEFAULT);
@@ -900,7 +900,7 @@ public unsafe sealed class H5O
         CallingConvention = CallingConvention.Cdecl,
         CharSet = CharSet.Ansi),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t visit_by_name
+    public static extern herr_t visit_by_name
         (hid_t loc_id, string obj_name, H5.index_t idx_type,
         H5.iter_order_t order, iterate_t op, IntPtr op_data,
         hid_t lapl_id = H5P.DEFAULT);

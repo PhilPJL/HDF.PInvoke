@@ -15,9 +15,9 @@
 
 namespace HDF.PInvoke;
 
-public unsafe sealed class H5AC
+public sealed unsafe class H5AC
 {
-    static H5AC() { H5.open(); }
+    static H5AC() { _ = H5.open(); }
 
     public const int CURR_CACHE_CONFIG_VERSION = 1;
 

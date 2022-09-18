@@ -19,9 +19,9 @@ using hssize_t = System.Int64;
 
 namespace HDF.PInvoke;
 
-public unsafe sealed class H5S
+public sealed unsafe class H5S
 {
-    static H5S() { H5.open(); }
+    static H5S() { _ = H5.open(); }
 
     // Define atomic datatypes
     public const int ALL = 0;

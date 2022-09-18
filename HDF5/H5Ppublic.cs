@@ -23,11 +23,11 @@ using prp_set_func_t = HDF.PInvoke.H5P.prp_cb2_t;
 
 namespace HDF.PInvoke;
 
-public unsafe sealed partial class H5P
+public sealed unsafe partial class H5P
 {
     static H5P()
     {
-        H5.open();
+        _ = H5.open();
     }
 
     /* Common creation order flags (for links in groups and attributes on
@@ -88,7 +88,7 @@ public unsafe sealed partial class H5P
         EntryPoint = "H5Padd_merge_committed_dtype_path",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t add_merge_committed_dtype_path
+    public static extern herr_t add_merge_committed_dtype_path
         (hid_t ocpypl_id, byte[] path);
 
     /// <summary>
@@ -106,7 +106,7 @@ public unsafe sealed partial class H5P
         CharSet = CharSet.Ansi,
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t add_merge_committed_dtype_path
+    public static extern herr_t add_merge_committed_dtype_path
         (hid_t ocpypl_id, string path);
 
     /// <summary>
@@ -121,7 +121,7 @@ public unsafe sealed partial class H5P
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Pall_filters_avail",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static htri_t all_filters_avail(hid_t plist_id);
+    public static extern htri_t all_filters_avail(hid_t plist_id);
 
     /// <summary>
     /// Terminates access to a property list.
@@ -134,7 +134,7 @@ public unsafe sealed partial class H5P
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Pclose",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t close(hid_t plist);
+    public static extern herr_t close(hid_t plist);
 
     /// <summary>
     /// Closes an existing property list class.
@@ -146,7 +146,7 @@ public unsafe sealed partial class H5P
     [DllImport(Constants.DLLFileName, EntryPoint = "H5Pclose_class",
         CallingConvention = CallingConvention.Cdecl),
     SuppressUnmanagedCodeSecurity, SecuritySafeCritical]
-    public extern static herr_t close_class(hid_t cls);
+    public static extern herr_t close_class(hid_t cls);
 
     /// <summary>
     /// Copies an existing property list to create a new property list.

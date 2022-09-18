@@ -8,8 +8,7 @@ public static class NativeDependencies
 
     public static void ResolvePathToExternalDependencies()
     {
-        string NativeDllPath;
-        if (!GetDllPathFromAppConfig(out NativeDllPath))
+        if (!GetDllPathFromAppConfig(out var NativeDllPath))
         {
             GetDllPathFromAssembly(out NativeDllPath);
         }
@@ -55,17 +54,12 @@ public static class NativeDependencies
 
     private static void GetDllPathFromAssembly(out string aPath)
     {
-        switch (IntPtr.Size)
+        aPath = IntPtr.Size switch
         {
-            case 8:
-                aPath = Path.Combine(Path.GetDirectoryName(GetAssemblyName()), Constants.DLL64bitPath);
-                break;
-            case 4:
-                aPath = Path.Combine(Path.GetDirectoryName(GetAssemblyName()), Constants.DLL32bitPath);
-                break;
-            default:
-                throw new NotImplementedException();
-        }
+            8 => Path.Combine(Path.GetDirectoryName(GetAssemblyName()), Constants.DLL64bitPath),
+            4 => Path.Combine(Path.GetDirectoryName(GetAssemblyName()), Constants.DLL32bitPath),
+            _ => throw new NotImplementedException(),
+        };
     }
 
     private static void AddPathStringToEnvironment(string aPath)
