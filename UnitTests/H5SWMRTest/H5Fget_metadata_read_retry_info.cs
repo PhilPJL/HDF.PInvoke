@@ -20,12 +20,13 @@ public partial class H5SWMRTest
     [TestMethod]
     public void H5Fget_metadata_read_retry_infoTestSWMR1()
     {
-        H5F.retry_info_t info = new H5F.retry_info_t();
-
-        info.retries0 = new IntPtr(10);
-        info.retries6 = new IntPtr(60);
-        info.retries14 = new IntPtr(140);
-        info.retries20 = new IntPtr(200);
+        H5F.retry_info_t info = new H5F.retry_info_t
+        {
+            retries0 = new IntPtr(10),
+            retries6 = new IntPtr(60),
+            retries14 = new IntPtr(140),
+            retries20 = new IntPtr(200)
+        };
 
         Assert.IsTrue(
             H5F.get_metadata_read_retry_info(m_v3_test_file_swmr,

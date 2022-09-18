@@ -27,9 +27,11 @@ public partial class H5PTest
 
         Assert.IsTrue(H5P.set_libver_bounds(fapl, H5F.libver_t.LATEST) >= 0);
 
-        H5AC.cache_image_config_t conf = new H5AC.cache_image_config_t();
-        conf.version = H5AC.CURR_CACHE_IMAGE_CONFIG_VERSION;
-        conf.entry_ageout = H5AC.CACHE_IMAGE__ENTRY_AGEOUT__NONE;
+        H5AC.cache_image_config_t conf = new H5AC.cache_image_config_t
+        {
+            version = H5AC.CURR_CACHE_IMAGE_CONFIG_VERSION,
+            entry_ageout = H5AC.CACHE_IMAGE__ENTRY_AGEOUT__NONE
+        };
 
         IntPtr config_ptr = Marshal.AllocHGlobal(Marshal.SizeOf(conf));
         Marshal.StructureToPtr(conf, config_ptr, false);

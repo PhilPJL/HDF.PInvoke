@@ -48,9 +48,11 @@ public partial class H5TSTest
                 (ls,
                 () =>
                 {
-                    TaskLocals tl = new TaskLocals();
-                    tl.handle = -1;
-                    tl.runningLength = 0;
+                    TaskLocals tl = new TaskLocals
+                    {
+                        handle = -1,
+                        runningLength = 0
+                    };
                     return tl;
                 },
                 (name, loop, taskLocals) =>

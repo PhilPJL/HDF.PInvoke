@@ -43,14 +43,22 @@ public partial class H5TSTest
         if (flag > 0)
         {
             // Create the new Thread and use the FileCreateProcedure method
-            Thread1 = new Thread(new ThreadStart(DatasetCreateProcedure));
-            Thread1.Name = "Thread1";
-            Thread2 = new Thread(new ThreadStart(DatasetCreateProcedure));
-            Thread2.Name = "Thread2";
-            Thread3 = new Thread(new ThreadStart(DatasetCreateProcedure));
-            Thread3.Name = "Thread3";
-            Thread4 = new Thread(new ThreadStart(DatasetCreateProcedure));
-            Thread4.Name = "Thread4";
+            Thread1 = new Thread(new ThreadStart(DatasetCreateProcedure))
+            {
+                Name = "Thread1"
+            };
+            Thread2 = new Thread(new ThreadStart(DatasetCreateProcedure))
+            {
+                Name = "Thread2"
+            };
+            Thread3 = new Thread(new ThreadStart(DatasetCreateProcedure))
+            {
+                Name = "Thread3"
+            };
+            Thread4 = new Thread(new ThreadStart(DatasetCreateProcedure))
+            {
+                Name = "Thread4"
+            };
 
             // Start running the thread
             Thread4.Start();
